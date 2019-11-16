@@ -1,7 +1,7 @@
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Context {
+namespace Infrastructure.Data {
     public class ApplicationContext : DbContext {
         public ApplicationContext() { }
         public ApplicationContext (DbContextOptions<ApplicationContext> options) : base (options) { }
