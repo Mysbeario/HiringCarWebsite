@@ -36,7 +36,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CarTypeId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("Core.Entities.CarType", b =>
@@ -55,7 +55,44 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarTypes");
+                    b.ToTable("CarType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Cost = 700000m,
+                            Name = "Ford EcoSport",
+                            Seat = (byte)5
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Cost = 1500000m,
+                            Name = "Ford Everest",
+                            Seat = (byte)7
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Cost = 700000m,
+                            Name = "Ford Fiesta",
+                            Seat = (byte)5
+                        },
+                        new
+                        {
+                            Id = "4",
+                            Cost = 500000m,
+                            Name = "Kia Morning",
+                            Seat = (byte)5
+                        },
+                        new
+                        {
+                            Id = "5",
+                            Cost = 700000m,
+                            Name = "Kia Cerato",
+                            Seat = (byte)5
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Car", b =>

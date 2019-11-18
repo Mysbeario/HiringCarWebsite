@@ -7,7 +7,7 @@ namespace Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CarTypes",
+                name: "CarType",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -17,11 +17,11 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarTypes", x => x.Id);
+                    table.PrimaryKey("PK_CarType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cars",
+                name: "Car",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -32,28 +32,53 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cars", x => x.Id);
+                    table.PrimaryKey("PK_Car", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cars_CarTypes_CarTypeId",
+                        name: "FK_Car_CarType_CarTypeId",
                         column: x => x.CarTypeId,
-                        principalTable: "CarTypes",
+                        principalTable: "CarType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "CarType",
+                columns: new[] { "Id", "Cost", "Name", "Seat" },
+                values: new object[] { "1", 700000m, "Ford EcoSport", (byte)5 });
+
+            migrationBuilder.InsertData(
+                table: "CarType",
+                columns: new[] { "Id", "Cost", "Name", "Seat" },
+                values: new object[] { "2", 1500000m, "Ford Everest", (byte)7 });
+
+            migrationBuilder.InsertData(
+                table: "CarType",
+                columns: new[] { "Id", "Cost", "Name", "Seat" },
+                values: new object[] { "3", 700000m, "Ford Fiesta", (byte)5 });
+
+            migrationBuilder.InsertData(
+                table: "CarType",
+                columns: new[] { "Id", "Cost", "Name", "Seat" },
+                values: new object[] { "4", 500000m, "Kia Morning", (byte)5 });
+
+            migrationBuilder.InsertData(
+                table: "CarType",
+                columns: new[] { "Id", "Cost", "Name", "Seat" },
+                values: new object[] { "5", 700000m, "Kia Cerato", (byte)5 });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Cars_CarTypeId",
-                table: "Cars",
+                name: "IX_Car_CarTypeId",
+                table: "Car",
                 column: "CarTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "Car");
 
             migrationBuilder.DropTable(
-                name: "CarTypes");
+                name: "CarType");
         }
     }
 }
