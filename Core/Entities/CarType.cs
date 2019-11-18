@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 namespace Core.Entities {
-    public class CarType : BaseEntity {
+    public class CarType: BaseEntity {
         public CarType() {
             this.Cars = new HashSet<Car>();
         }
