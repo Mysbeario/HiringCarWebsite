@@ -13,7 +13,9 @@ namespace Infrastructure.Repositories {
             this._context = context;
         }
 
-        public async Task<IEnumerable<CarType>> GetAll () => await _context.CarType.ToListAsync ();
+        public async Task<IEnumerable<CarType>> GetAll () {
+            return await _context.CarType.ToListAsync ();
+        }
 
         public async Task<IEnumerable<CarType>> GetPaginated (int page, int size) {
             return null;
