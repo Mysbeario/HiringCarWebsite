@@ -1,59 +1,30 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import Table from "./Table";
+import axios from "axios";
+import TableColumn from '../types/TableColumn';
 
-export class FetchData extends Component {
-  static displayName = FetchData.name;
+const headers = [
+  new TableColumn("id", "ID"),
+  new TableColumn("name", "Type"),
+  new TableColumn("seat", "Seat"),
+  new TableColumn("cost", "Cost (VND per day)")
+];
 
-  constructor(props) {
-    super(props);
-    this.state = { forecasts: [], loading: true };
-  }
+const FetchData = () => {
+  const [carTypes, setData] = useState([]);
 
-  componentDidMount() {
-    this.populateWeatherData();
-  }
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("/cartype");
+      setData(data);
+    })();
+  }, []);
 
-  static renderForecastsTable(forecasts) {
-    return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    );
-  }
+  return (
+    <div>
+      <Table headers={headers} data={carTypes} />
+    </div>
+  );
+};
 
-  render() {
-    let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.forecasts);
-
-    return (
-      <div>
-        <h1 id="tabelLabel" >Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
-        {contents}
-      </div>
-    );
-  }
-
-  async populateWeatherData() {
-    const response = await fetch('weatherforecast');
-    const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
-  }
-}
+export default FetchData;
