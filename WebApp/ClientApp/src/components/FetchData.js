@@ -11,6 +11,14 @@ const headers = [
   new TableColumn("cost", "Cost (VND per day)")
 ];
 
+const createNewCarType = e => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+  for (var value of data.values()) {
+    console.log(value); 
+ }
+};
+
 const FetchData = () => {
   const [carTypes, setData] = useState([]);
   const [isAddCarTypeFormOpened, openAddCarTypeForm] = useState(false);
@@ -28,22 +36,26 @@ const FetchData = () => {
       <button onClick={() => openAddCarTypeForm(true)}>Add new Car Type</button>
       {isAddCarTypeFormOpened &&
         <Modal onClose={() => openAddCarTypeForm(false)}>
-          <form>
+          <form onSubmit={createNewCarType}>
             <div>
-              <label>ID</label>
-              <input type="text"></input>
+              <label htmlFor="Id">ID</label>
+              <input type="text" name="Id" />
             </div>
             <div>
-              <label>Name</label>
-              <input type="text"></input>
+              <label htmlFor="Name">Name</label>
+              <input type="text" name="Name" />
             </div>
             <div>
-              <label>Number of Seat</label>
-              <input type="text"></input>
+              <label htmlFor="Seat">Number of Seat</label>
+              <input type="text" name="Seat" />
             </div>
             <div>
-              <label>Cost per Day (VND)</label>
-              <input type="text"></input>
+              <label htmlFor="Cost">Cost per Day (VND)</label>
+              <input type="text" name="Cost" />
+            </div>
+            <div>
+              <button type="submit">Add</button>
+              <button>Reset</button>
             </div>
           </form>
         </Modal>}
