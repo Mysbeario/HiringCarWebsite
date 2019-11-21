@@ -15,7 +15,7 @@ const FetchData = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get("/cartype");
+      const { data } = await axios.get("/api/cartype");
       setData(data);
     })();
   }, []);
@@ -23,6 +23,7 @@ const FetchData = () => {
   return (
     <div>
       <Table headers={headers} data={carTypes} />
+      <button>Add new Car Type</button>
     </div>
   );
 };

@@ -16,6 +16,7 @@ namespace WebApp.Controllers {
         }
 
         [HttpGet]
+        [Route("/api/cartype")]
         public async Task<IEnumerable<CarType>> Get () {
             return await carTypeRepository.GetAll ();
         }
