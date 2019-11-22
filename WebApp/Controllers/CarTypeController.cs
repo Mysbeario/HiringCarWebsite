@@ -32,5 +32,17 @@ namespace WebApp.Controllers {
         public async Task<CarType> GetByID (string id) {
             return await carTypeRepository.GetById(id);
         }
+
+        [HttpPut]
+        [Route("/api/cartype/{id}")]
+        public async Task Update([FromForm] CarType carType) {
+            await carTypeRepository.Update(carType);
+        }
+
+        [HttpDelete]
+        [Route("/api/cartype/{id}")]
+        public async Task Delete(string id) {
+            await carTypeRepository.Delete(id);
+        }
     }
 }

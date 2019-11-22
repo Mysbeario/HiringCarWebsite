@@ -30,11 +30,14 @@ namespace Infrastructure.Repositories {
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update (string id, CarType entity) {
-
+        public async Task Update (CarType entity) {
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
         public async Task Delete (string id) {
-
+            CarType carType = await _context.CarType.FindAsync(id);
+            _context.CarType.Remove(carType);
+            await _context.SaveChangesAsync();
         }
     }
 }

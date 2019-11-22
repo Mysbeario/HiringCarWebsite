@@ -8,7 +8,7 @@ namespace Infrastructure.Interfaces {
         Task<IEnumerable<T>> GetPaginated (int page, int size);
         Task<T> GetById (string id);
         Task Create (T entity);
-        Task Update (string id, T entity);
+        Task Update (T entity);
         Task Delete (string id);
     }
 }
