@@ -31,12 +31,12 @@ const ModalContent = styled.div`
 	padding: 1.25em;
 `;
 
-const Modal = ({ onClose, children }) => {
+const Modal = ({ title = "", onClose, children }) => {
 	return (
 		<ModalWrapper>
 			<ModalBody>
 				<ModalHeader>
-					<h3>Header</h3>
+					<h3>{title}</h3>
 					<button onClick={onClose}>&times;</button>
 				</ModalHeader>
 				<ModalContent>
