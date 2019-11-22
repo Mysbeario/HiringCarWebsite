@@ -6,15 +6,19 @@ const TableHeader = styled.tr`
 	color: black;
 `;
 
-const Table = ({ headers, data }) => {
+const Table = ({ headers, data, hasActionColumn = false, onEditSelected, onDeleteSelected }) => {
 	return (
 		<table>
 			<tbody>
 				<TableHeader>
 					{headers.map(header => <th>{header.display}</th>)}
+					{hasActionColumn && <th>Action</th>}
 				</TableHeader>
 				{data.map(item => <tr>
 					{headers.map(header => <td>{item[header.name]}</td>)}
+					{hasActionColumn && <td>
+						<a onClick={() => onEditSelected(item.id)}>Edit</a> |
+						<a onClick={() => onDeleteSelected(item.id)}>Delete</a></td>}
 				</tr>)}
 			</tbody>
 		</table>
