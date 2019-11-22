@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers {
     [ApiController]
-    [Route ("[controller]")]
+    [Route ("/api/cartype")]
     public class CarTypeController : ControllerBase {
         private CarTypeRepository carTypeRepository;
 
@@ -16,31 +16,29 @@ namespace WebApp.Controllers {
         }
 
         [HttpGet]
-        [Route("/api/cartype")]
         public async Task<IEnumerable<CarType>> GetAll () {
             return await carTypeRepository.GetAll ();
         }
 
         [HttpPost]
-        [Route("/api/cartype")]
         public async Task Create ([FromForm] CarType carType) {
             await carTypeRepository.Create(carType);
         }
 
         [HttpGet]
-        [Route("/api/cartype/{id}")]
+        [Route("{id}")]
         public async Task<CarType> GetByID (string id) {
             return await carTypeRepository.GetById(id);
         }
 
         [HttpPut]
-        [Route("/api/cartype/{id}")]
+        [Route("{id}")]
         public async Task Update([FromForm] CarType carType) {
             await carTypeRepository.Update(carType);
         }
 
         [HttpDelete]
-        [Route("/api/cartype/{id}")]
+        [Route("{id}")]
         public async Task Delete(string id) {
             await carTypeRepository.Delete(id);
         }
