@@ -1,27 +1,27 @@
 import React from "react";
-import styled from "styled-components";
-
-const TableHeader = styled.tr`
-	background-color: gray;
-	color: black;
-`;
+import { Table as TableStrap, Button } from "reactstrap";
 
 const Table = ({ headers, data, hasActionColumn = false, onEditSelected, onDeleteSelected }) => {
 	return (
-		<table>
-			<tbody>
-				<TableHeader>
+		<TableStrap striped>
+			<thead>
+				<tr>
 					{headers.map(header => <th>{header.display}</th>)}
 					{hasActionColumn && <th>Action</th>}
-				</TableHeader>
+				</tr>
+			</thead>
+			<tbody>
 				{data.map(item => <tr>
-					{headers.map(header => <td>{item[header.name]}</td>)}
+					{headers.map(header => header.name === "id" ?
+						<th scope="row">{item.id}</th> :
+						<td>{item[header.name]}</td>)}
 					{hasActionColumn && <td>
-						<a onClick={() => onEditSelected(item.id)}>Edit</a> |
-						<a onClick={() => onDeleteSelected(item.id)}>Delete</a></td>}
+						<Button color="info" size="sm" onClick={() => onEditSelected(item.id)}>Edit</Button>&nbsp;
+						<Button color="danger" size="sm" onClick={() => onDeleteSelected(item.id)}>Delete</Button>
+					</td>}
 				</tr>)}
 			</tbody>
-		</table>
+		</TableStrap>
 	);
 };
 
