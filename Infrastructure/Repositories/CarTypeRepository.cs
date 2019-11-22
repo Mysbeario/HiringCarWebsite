@@ -26,8 +26,10 @@ namespace Infrastructure.Repositories {
         }
 
         public async Task Create (CarType entity) {
-
+            await _context.CarType.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
+        
         public async Task Update (string id, CarType entity) {
 
         }

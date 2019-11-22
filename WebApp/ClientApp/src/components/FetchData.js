@@ -14,9 +14,8 @@ const headers = [
 const createNewCarType = e => {
   e.preventDefault();
   const data = new FormData(e.target);
-  for (var value of data.values()) {
-    console.log(value); 
- }
+  
+  axios.post("/api/cartype", data);
 };
 
 const FetchData = () => {
@@ -47,11 +46,11 @@ const FetchData = () => {
             </div>
             <div>
               <label htmlFor="Seat">Number of Seat</label>
-              <input type="text" name="Seat" />
+              <input type="number" name="Seat" />
             </div>
             <div>
               <label htmlFor="Cost">Cost per Day (VND)</label>
-              <input type="text" name="Cost" />
+              <input type="number" name="Cost" />
             </div>
             <div>
               <button type="submit">Add</button>
