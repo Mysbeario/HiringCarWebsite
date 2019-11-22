@@ -22,14 +22,14 @@ namespace Infrastructure.Repositories {
         }
 
         public async Task<CarType> GetById (string id) {
-            return null;
+            return await _context.CarType.FindAsync(id);
         }
 
         public async Task Create (CarType entity) {
             await _context.CarType.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
-        
+
         public async Task Update (string id, CarType entity) {
 
         }
