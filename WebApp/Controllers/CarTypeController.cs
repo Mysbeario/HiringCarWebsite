@@ -4,6 +4,7 @@ using Core.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebApp.Controllers {
     [ApiController]
@@ -16,31 +17,38 @@ namespace WebApp.Controllers {
         }
 
         [HttpGet]
+        [Route ("~/api/pagination/cartype")]
+        public async Task<int> CountPages ([FromQuery]int size) {
+            return await carTypeRepository.CountPages (size);
+        }
+
+        [HttpGet]
         public async Task<IEnumerable<CarType>> GetAll () {
             return await carTypeRepository.GetAll ();
         }
 
         [HttpPost]
         public async Task Create ([FromForm] CarType carType) {
-            await carTypeRepository.Create(carType);
+            await carTypeRepository.Create (carType);
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route ("{id}")]
         public async Task<CarType> GetByID (string id) {
-            return await carTypeRepository.GetById(id);
+            Console.WriteLine("{id}");
+            return await carTypeRepository.GetById (id);
         }
 
         [HttpPut]
-        [Route("{id}")]
-        public async Task Update([FromForm] CarType carType) {
-            await carTypeRepository.Update(carType);
+        [Route ("{id}")]
+        public async Task Update ([FromForm] CarType carType) {
+            await carTypeRepository.Update (carType);
         }
 
         [HttpDelete]
-        [Route("{id}")]
-        public async Task Delete(string id) {
-            await carTypeRepository.Delete(id);
+        [Route ("{id}")]
+        public async Task Delete (string id) {
+            await carTypeRepository.Delete (id);
         }
     }
 }

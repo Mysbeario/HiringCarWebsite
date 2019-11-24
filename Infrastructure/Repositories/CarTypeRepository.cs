@@ -4,6 +4,8 @@ using Core.Entities;
 using Infrastructure.Data;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System;
 
 namespace Infrastructure.Repositories {
     public class CarTypeRepository : IGenericRepository<CarType> {
@@ -18,7 +20,8 @@ namespace Infrastructure.Repositories {
         }
 
         public async Task<IEnumerable<CarType>> GetPaginated (int page, int size) {
-            return null;
+            var list = await GetAll();
+            return list.Skip((page - 1) * size).Take(size);
         }
 
         public async Task<CarType> GetById (string id) {
@@ -38,6 +41,11 @@ namespace Infrastructure.Repositories {
             CarType carType = await _context.CarType.FindAsync(id);
             _context.CarType.Remove(carType);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> CountPages (int size) {
+            int amount = await _context.CarType.CountAsync();
+            return (int)Math.Ceiling(amount / (double)size);
         }
     }
 }

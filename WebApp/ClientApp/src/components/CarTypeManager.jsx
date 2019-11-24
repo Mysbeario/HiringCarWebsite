@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import Table from "./Table";
 import axios from "axios";
 import TableColumn from '../types/TableColumn';
 import CarType from "../types/CarType";
+
+const pageSize = 5;
 
 const headers = [
   new TableColumn("id", "ID"),
@@ -12,8 +14,18 @@ const headers = [
   new TableColumn("cost", "Cost (VND per day)")
 ];
 
+const setupPagination = size => {
+  let arr = [];
+  for (let i = 1; i <= size; i++) {
+    arr.push(<PaginationItem><PaginationLink href="#">{i}</PaginationLink></PaginationItem>);
+  }
+
+  return arr;
+}
+
 const CarTypeManager = () => {
   const [carTypes, setCarTypeList] = useState([]);
+  const [pages, setPage] = useState(1);
   const [currentEditedCarType, setCurrentEditedCarType] = useState(new CarType());
   const [isAddCarTypeFormOpen, setAddCarTypeForm] = useState(false);
   const [isEditCarTypeFormOpen, setEditCarTypeForm] = useState(false);
@@ -22,6 +34,13 @@ const CarTypeManager = () => {
   const toggleAddCarTypeModal = () => setAddCarTypeForm(!isAddCarTypeFormOpen);
   const toggleEditCarTypeModal = () => setEditCarTypeForm(!isEditCarTypeFormOpen);
   const toggleDeleteCarTypeModal = () => setDeleteCarTypeForm(!isDeleteCarTypeFormOpen);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("/api/pagination/cartype/?size=" + pageSize);
+      setPage(data);
+    })();
+  }, []);
 
   const createNewCarType = async e => {
     e.preventDefault();
@@ -115,6 +134,9 @@ const CarTypeManager = () => {
           </Form>
         </Modal>
       </div>
+      <Pagination>
+        {setupPagination(pages)}
+      </Pagination>
       <Modal isOpen={isEditCarTypeFormOpen} toggle={toggleEditCarTypeModal}>
         <ModalHeader toggle={toggleEditCarTypeModal}>Edit Car Type</ModalHeader>
         <Form onSubmit={editCarType}>
