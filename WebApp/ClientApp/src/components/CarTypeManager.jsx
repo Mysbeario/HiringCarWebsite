@@ -12,7 +12,7 @@ const headers = [
   new TableColumn("cost", "Cost (VND per day)")
 ];
 
-const FetchData = () => {
+const CarTypeManager = () => {
   const [carTypes, setCarTypeList] = useState([]);
   const [currentEditedCarType, setCurrentEditedCarType] = useState(new CarType());
   const [isAddCarTypeFormOpen, setAddCarTypeForm] = useState(false);
@@ -162,4 +162,4 @@ const FetchData = () => {
   );
 };
 
-export default FetchData;
+export default CarTypeManager;
