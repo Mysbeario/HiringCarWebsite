@@ -40,14 +40,10 @@ const CarTypeManager = () => {
       const { data } = await axios.get("/api/pagination/cartype/" + currentPage + "?size=" + pageSize + "&sortBy=" + sortBy);
       setCarTypeList(data);
     })();
-  }, [currentPage]);
-    
+  }, [currentPage, sortBy]);
+
   useEffect(() => {
-    (async () => {
-      setCurrentPage(1);
-      const { data } = await axios.get("/api/pagination/cartype/1" + "?size=" + pageSize + "&sortBy=" + sortBy);
-      setCarTypeList(data);
-    })();
+    setCurrentPage(1);
   }, [sortBy]);
 
   const setupPagination = () => {
