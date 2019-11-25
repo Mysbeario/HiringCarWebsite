@@ -14,18 +14,10 @@ const headers = [
   new TableColumn("cost", "Cost (VND per day)")
 ];
 
-const setupPagination = size => {
-  let arr = [];
-  for (let i = 1; i <= size; i++) {
-    arr.push(<PaginationItem><PaginationLink href="#">{i}</PaginationLink></PaginationItem>);
-  }
-
-  return arr;
-}
-
 const CarTypeManager = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [carTypes, setCarTypeList] = useState([]);
-  const [pages, setPage] = useState(1);
+  const [pages, setTotalPages] = useState(1);
   const [currentEditedCarType, setCurrentEditedCarType] = useState(new CarType());
   const [isAddCarTypeFormOpen, setAddCarTypeForm] = useState(false);
   const [isEditCarTypeFormOpen, setEditCarTypeForm] = useState(false);
@@ -37,10 +29,26 @@ const CarTypeManager = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get("/api/pagination/cartype/?size=" + pageSize);
-      setPage(data);
+      const { data: totalPages } = await axios.get("/api/pagination/cartype/?size=" + pageSize);
+      setTotalPages(totalPages);
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("/api/pagination/cartype/" + currentPage + "?size=" + pageSize);
+      setCarTypeList(data);
+    })();
+  }, [currentPage]);
+
+  const setupPagination = () => {
+    let arr = [];
+    for (let i = 1; i <= pages; i++) {
+      arr.push(<PaginationItem active={currentPage === i}><PaginationLink onClick={() => setCurrentPage(i)}>{i}</PaginationLink></PaginationItem>);
+    }
+  
+    return arr;
+  }
 
   const createNewCarType = async e => {
     e.preventDefault();
@@ -92,14 +100,7 @@ const CarTypeManager = () => {
     const data = carTypes.find(item => item.id === id);
     setCurrentEditedCarType(data);
     toggleDeleteCarTypeModal();
-  }
-
-  useEffect(() => {
-    (async () => {
-      const { data } = await axios.get("/api/cartype");
-      setCarTypeList(data);
-    })();
-  }, []);
+  };
 
   return (
     <div>
@@ -135,7 +136,7 @@ const CarTypeManager = () => {
         </Modal>
       </div>
       <Pagination>
-        {setupPagination(pages)}
+        {setupPagination()}
       </Pagination>
       <Modal isOpen={isEditCarTypeFormOpen} toggle={toggleEditCarTypeModal}>
         <ModalHeader toggle={toggleEditCarTypeModal}>Edit Car Type</ModalHeader>

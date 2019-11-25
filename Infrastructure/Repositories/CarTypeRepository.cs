@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories {
 
         public async Task<IEnumerable<CarType>> GetPaginated (int page, int size) {
             var list = await GetAll();
-            return list.Skip((page - 1) * size).Take(size);
+            return list.OrderBy(a => a.Id).Skip((page - 1) * size).Take(size);
         }
 
         public async Task<CarType> GetById (string id) {

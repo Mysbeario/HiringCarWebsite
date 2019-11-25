@@ -23,6 +23,12 @@ namespace WebApp.Controllers {
         }
 
         [HttpGet]
+        [Route ("~/api/pagination/cartype/{page}")]
+        public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery]int size) {
+            return await carTypeRepository.GetPaginated(page, size);
+        }
+
+        [HttpGet]
         public async Task<IEnumerable<CarType>> GetAll () {
             return await carTypeRepository.GetAll ();
         }
