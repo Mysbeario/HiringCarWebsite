@@ -18,14 +18,14 @@ namespace WebApp.Controllers {
 
         [HttpGet]
         [Route ("~/api/pagination/cartype")]
-        public async Task<int> CountPages ([FromQuery] int size) {
-            return await carTypeRepository.CountPages (size);
+        public async Task<int> CountPages ([FromQuery] int size, [FromQuery] string search = " ") {
+            return await carTypeRepository.CountPages (size, search);
         }
 
         [HttpGet]
         [Route ("~/api/pagination/cartype/{page}")]
-        public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy) {
-            return await carTypeRepository.GetPaginated (page, size, sortBy);
+        public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy, [FromQuery] string search = " ") {
+            return await carTypeRepository.GetPaginated (page, size, sortBy, search);
         }
 
         [HttpGet]

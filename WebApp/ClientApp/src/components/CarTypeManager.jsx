@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import React, { useState, useEffect, useRef } from 'react';
+import { Col, Container, Row, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import Table from "./Table";
 import axios from "axios";
 import TableColumn from '../types/TableColumn';
@@ -15,6 +15,7 @@ const headers = [
 ];
 
 const CarTypeManager = () => {
+  const [searchString, setSearchString] = useState("");
   const [sortBy, setSorting] = useState(headers[0].name);
   const [currentPage, setCurrentPage] = useState(1);
   const [carTypes, setCarTypeList] = useState([]);
@@ -23,6 +24,7 @@ const CarTypeManager = () => {
   const [isAddCarTypeFormOpen, setAddCarTypeForm] = useState(false);
   const [isEditCarTypeFormOpen, setEditCarTypeForm] = useState(false);
   const [isDeleteCarTypeFormOpen, setDeleteCarTypeForm] = useState(false);
+  const searchTimeout = useRef();
 
   const toggleAddCarTypeModal = () => setAddCarTypeForm(!isAddCarTypeFormOpen);
   const toggleEditCarTypeModal = () => setEditCarTypeForm(!isEditCarTypeFormOpen);
@@ -30,14 +32,14 @@ const CarTypeManager = () => {
 
   useEffect(() => {
     (async () => {
-      const { data: totalPages } = await axios.get("/api/pagination/cartype/?size=" + pageSize);
+      const { data: totalPages } = await axios.get("/api/pagination/cartype/?size=" + pageSize + (searchString.trim() ? "&search=" + searchString : ""));
       setTotalPages(totalPages);
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get("/api/pagination/cartype/" + currentPage + "?size=" + pageSize + "&sortBy=" + sortBy);
+      const { data } = await axios.get("/api/pagination/cartype/" + currentPage + "?size=" + pageSize + "&sortBy=" + sortBy + (searchString.trim() ? "&search=" + searchString : ""));
       setCarTypeList(data);
     })();
   }, [currentPage, sortBy]);
@@ -45,6 +47,25 @@ const CarTypeManager = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [sortBy]);
+
+  useEffect(() => {
+    clearTimeout(searchTimeout.current);
+    if (!searchString.trim()) {
+      return;
+    }
+
+    searchTimeout.current = setTimeout(async () => {
+      const { data: totalPages } = await axios.get("/api/pagination/cartype/?size=" + pageSize + (searchString.trim() ? "&search=" + searchString : ""));
+      setTotalPages(totalPages);
+      const { data } = await axios.get("/api/pagination/cartype/1" + "?size=" + pageSize + "&sortBy=" + sortBy + (searchString.trim() ? "&search=" + searchString : ""));
+      setCarTypeList(data);
+      setCurrentPage(1);
+    }, 500)
+  }, [searchString]);
+
+  const handleSearchStringChange = e => {
+    setSearchString(e.target.value);
+  };
 
   const setupPagination = () => {
     let arr = [];
@@ -111,9 +132,16 @@ const CarTypeManager = () => {
     <Container>
       <Row>
         <Form>
-          <Input type="select" onChange={e => setSorting(e.target.value)}>
-            {headers.map(header => <option value={header.name}>Sort By {header.display}</option>)}
-          </Input>
+          <Row>
+            <Col md={6}>
+              <Input type="text" placeholder="Search..." onChange={handleSearchStringChange} />
+            </Col>
+            <Col md={6}>
+              <Input type="select" onChange={e => setSorting(e.target.value)}>
+                {headers.map(header => <option value={header.name}>Sort By {header.display}</option>)}
+              </Input>
+            </Col>
+          </Row>
         </Form>
       </Row>
       <Row>
