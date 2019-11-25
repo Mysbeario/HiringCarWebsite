@@ -19,9 +19,23 @@ namespace Infrastructure.Repositories {
             return await _context.CarType.ToListAsync ();
         }
 
-        public async Task<IEnumerable<CarType>> GetPaginated (int page, int size) {
+        public async Task<IEnumerable<CarType>> GetPaginated (int page, int size, string sortBy) {
             var list = await GetAll();
-            return list.OrderBy(a => a.Id).Skip((page - 1) * size).Take(size);
+            switch (sortBy) {
+                case "name":
+                    list = list.OrderBy(a => a.Name);
+                    break;
+                case "seat":
+                    list = list.OrderBy(a => a.Seat);
+                    break;
+                case "cost":
+                    list = list.OrderBy(a => a.Cost);
+                    break;
+                default:
+                    list = list.OrderBy(a => a.Id);
+                    break;
+            }
+            return list.Skip((page - 1) * size).Take(size);
         }
 
         public async Task<CarType> GetById (string id) {

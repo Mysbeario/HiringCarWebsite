@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import { Container, Row, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import Table from "./Table";
 import axios from "axios";
 import TableColumn from '../types/TableColumn';
@@ -15,6 +15,7 @@ const headers = [
 ];
 
 const CarTypeManager = () => {
+  const [sortBy, setSorting] = useState(headers[0].name);
   const [currentPage, setCurrentPage] = useState(1);
   const [carTypes, setCarTypeList] = useState([]);
   const [pages, setTotalPages] = useState(1);
@@ -36,17 +37,25 @@ const CarTypeManager = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get("/api/pagination/cartype/" + currentPage + "?size=" + pageSize);
+      const { data } = await axios.get("/api/pagination/cartype/" + currentPage + "?size=" + pageSize + "&sortBy=" + sortBy);
       setCarTypeList(data);
     })();
   }, [currentPage]);
+    
+  useEffect(() => {
+    (async () => {
+      setCurrentPage(1);
+      const { data } = await axios.get("/api/pagination/cartype/1" + "?size=" + pageSize + "&sortBy=" + sortBy);
+      setCarTypeList(data);
+    })();
+  }, [sortBy]);
 
   const setupPagination = () => {
     let arr = [];
     for (let i = 1; i <= pages; i++) {
       arr.push(<PaginationItem active={currentPage === i}><PaginationLink onClick={() => setCurrentPage(i)}>{i}</PaginationLink></PaginationItem>);
     }
-  
+
     return arr;
   }
 
@@ -103,9 +112,18 @@ const CarTypeManager = () => {
   };
 
   return (
-    <div>
-      <Table headers={headers} data={carTypes} hasActionColumn onEditSelected={openEditForm} onDeleteSelected={openDeleteForm} />
-      <div>
+    <Container>
+      <Row>
+        <Form>
+          <Input type="select" onChange={e => setSorting(e.target.value)}>
+            {headers.map(header => <option value={header.name}>Sort By {header.display}</option>)}
+          </Input>
+        </Form>
+      </Row>
+      <Row>
+        <Table headers={headers} data={carTypes} hasActionColumn onEditSelected={openEditForm} onDeleteSelected={openDeleteForm} />
+      </Row>
+      <Row>
         <Button color="primary" onClick={toggleAddCarTypeModal}>Add New Car Type</Button>
         <Modal isOpen={isAddCarTypeFormOpen} toggle={toggleAddCarTypeModal}>
           <ModalHeader toggle={toggleAddCarTypeModal}>Add New Car Type</ModalHeader>
@@ -134,10 +152,12 @@ const CarTypeManager = () => {
             </ModalFooter>
           </Form>
         </Modal>
-      </div>
-      <Pagination>
-        {setupPagination()}
-      </Pagination>
+      </Row>
+      <Row>
+        <Pagination className="center-pagination">
+          {setupPagination()}
+        </Pagination>
+      </Row>
       <Modal isOpen={isEditCarTypeFormOpen} toggle={toggleEditCarTypeModal}>
         <ModalHeader toggle={toggleEditCarTypeModal}>Edit Car Type</ModalHeader>
         <Form onSubmit={editCarType}>
@@ -181,7 +201,7 @@ const CarTypeManager = () => {
           </ModalFooter>
         </Form>
       </Modal>
-    </div>
+    </Container>
   );
 };
 

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace WebApp.Controllers {
     [ApiController]
@@ -18,14 +18,14 @@ namespace WebApp.Controllers {
 
         [HttpGet]
         [Route ("~/api/pagination/cartype")]
-        public async Task<int> CountPages ([FromQuery]int size) {
+        public async Task<int> CountPages ([FromQuery] int size) {
             return await carTypeRepository.CountPages (size);
         }
 
         [HttpGet]
         [Route ("~/api/pagination/cartype/{page}")]
-        public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery]int size) {
-            return await carTypeRepository.GetPaginated(page, size);
+        public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy) {
+            return await carTypeRepository.GetPaginated (page, size, sortBy);
         }
 
         [HttpGet]
@@ -41,7 +41,7 @@ namespace WebApp.Controllers {
         [HttpGet]
         [Route ("{id}")]
         public async Task<CarType> GetByID (string id) {
-            Console.WriteLine("{id}");
+            Console.WriteLine ("{id}");
             return await carTypeRepository.GetById (id);
         }
 
