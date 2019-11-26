@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import Manager from './components/Manager';
+import ManagerLayout from './components/ManagerLayout';
 import { Counter } from './components/Counter';
 
 import './custom.css'
@@ -15,7 +15,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
-        <Route path='/manager' component={Manager} />
+        <Route path='/manager' component={ManagerLayout} />
       </Layout>
     );
   }

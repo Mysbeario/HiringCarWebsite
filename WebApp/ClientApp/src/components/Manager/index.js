@@ -1,3 +1,4 @@
 import Manager from "./Manager";
+import CarTypeManager from "./CarTypeManager";
 
-export default Manager;
+export { CarTypeManager, Manager };

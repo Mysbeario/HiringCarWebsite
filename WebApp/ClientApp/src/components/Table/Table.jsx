@@ -1,7 +1,7 @@
 import React from "react";
 import { Table as TableStrap, Button } from "reactstrap";
 
-const Table = ({ headers, data, hasActionColumn = false, onEditSelected, onDeleteSelected }) => {
+const Table = ({ headers, data, hasActionColumn = false, onActionSelected }) => {
 	return (
 		<TableStrap striped>
 			<thead>
@@ -16,8 +16,8 @@ const Table = ({ headers, data, hasActionColumn = false, onEditSelected, onDelet
 						<th scope="row">{item.id}</th> :
 						<td>{item[header.name]}</td>)}
 					{hasActionColumn && <td>
-						<Button color="info" size="sm" onClick={() => onEditSelected(item.id)}>Edit</Button>&nbsp;
-						<Button color="danger" size="sm" onClick={() => onDeleteSelected(item.id)}>Delete</Button>
+						<Button color="info" size="sm" onClick={() => onActionSelected(item.id, "edit")}>Edit</Button>&nbsp;
+						<Button color="danger" size="sm" onClick={() => onActionSelected(item.id, "delete")}>Delete</Button>
 					</td>}
 				</tr>)}
 			</tbody>
