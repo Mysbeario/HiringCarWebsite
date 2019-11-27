@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Col, Row, Nav, NavItem, NavLink } from "reactstrap";
 import { Link, Route, useRouteMatch, Switch } from "react-router-dom";
-import { CarTypeManager } from "../Manager";
+import { CarTypeManager, CarManager } from "../Manager";
 
 const ManagerLayout = () => {
 	const { path, url } = useRouteMatch();
@@ -25,6 +25,7 @@ const ManagerLayout = () => {
 					<Switch>
 						<Route exact path={path}>Welcome</Route>
 						<Route path={`${path}/car-type`} component={CarTypeManager} />
+						<Route path={`${path}/car`} component={CarManager} />
 					</Switch>
 				</Col>
 			</Row>
