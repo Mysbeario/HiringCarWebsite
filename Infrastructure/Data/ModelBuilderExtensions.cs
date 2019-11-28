@@ -162,6 +162,233 @@ namespace Infrastructure.Data {
                         Cost = 1100000M
                 }
             );
+
+            modelBuilder.Entity<Car> ().HasData(
+                new Car {
+                    Id = "1",
+                    CarTypeId = "19",
+                    NumberPlate = "51G-23560",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "2",
+                    CarTypeId = "12",
+                    NumberPlate = "51G-69186",
+                    IsWifiAvailable = true,
+                    Color = "Silver"
+                },
+                new Car {
+                    Id = "3",
+                    CarTypeId = "14",
+                    NumberPlate = "51G-74141",
+                    IsWifiAvailable = false,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "4",
+                    CarTypeId = "16",
+                    NumberPlate = "51G-65404",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "5",
+                    CarTypeId = "10",
+                    NumberPlate = "94A-19715",
+                    IsWifiAvailable = false,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "6",
+                    CarTypeId = "13",
+                    NumberPlate = "51G-22986",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "7",
+                    CarTypeId = "9",
+                    NumberPlate = "51G-23186",
+                    IsWifiAvailable = true,
+                    Color = "Silver"
+                },
+                new Car {
+                    Id = "8",
+                    CarTypeId = "15",
+                    NumberPlate = "51G-63428",
+                    IsWifiAvailable = false,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "9",
+                    CarTypeId = "18",
+                    NumberPlate = "51G-75835",
+                    IsWifiAvailable = false,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "10",
+                    CarTypeId = "10",
+                    NumberPlate = "94A-37715",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "11",
+                    CarTypeId = "13",
+                    NumberPlate = "51G-32986",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "12",
+                    CarTypeId = "21",
+                    NumberPlate = "61A-76150",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "13",
+                    CarTypeId = "11",
+                    NumberPlate = "51G-37128",
+                    IsWifiAvailable = false,
+                    Color = "Black"
+                },
+                new Car {
+                    Id = "14",
+                    CarTypeId = "11",
+                    NumberPlate = "51G-99604",
+                    IsWifiAvailable = true,
+                    Color = "Silver"
+                },
+                new Car {
+                    Id = "15",
+                    CarTypeId = "13",
+                    NumberPlate = "51F-56476",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "16",
+                    CarTypeId = "13",
+                    NumberPlate = "51G-89975",
+                    IsWifiAvailable = false,
+                    Color = "Dark Blue"
+                },
+                new Car {
+                    Id = "17",
+                    CarTypeId = "22",
+                    NumberPlate = "51G-21640",
+                    IsWifiAvailable = false,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "18",
+                    CarTypeId = "18",
+                    NumberPlate = "51A-48815",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "19",
+                    CarTypeId = "14",
+                    NumberPlate = "51G-58430",
+                    IsWifiAvailable = true,
+                    Color = "Red"
+                },
+                new Car {
+                    Id = "20",
+                    CarTypeId = "6",
+                    NumberPlate = "51G-22488",
+                    IsWifiAvailable = false,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "21",
+                    CarTypeId = "5",
+                    NumberPlate = "51F-12136",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "22",
+                    CarTypeId = "2",
+                    NumberPlate = "51F-90254",
+                    IsWifiAvailable = true,
+                    Color = "Silver"
+                },
+                new Car {
+                    Id = "23",
+                    CarTypeId = "16",
+                    NumberPlate = "51G-XX404",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "24",
+                    CarTypeId = "14",
+                    NumberPlate = "51G-57912",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "25",
+                    CarTypeId = "2",
+                    NumberPlate = "51H-23163",
+                    IsWifiAvailable = true,
+                    Color = "Black"
+                },
+                new Car {
+                    Id = "26",
+                    CarTypeId = "4",
+                    NumberPlate = "51F-56959",
+                    IsWifiAvailable = true,
+                    Color = "Red"
+                },
+                new Car {
+                    Id = "27",
+                    CarTypeId = "11",
+                    NumberPlate = "51G-35204",
+                    IsWifiAvailable = false,
+                    Color = "Silver"
+                },
+                new Car {
+                    Id = "28",
+                    CarTypeId = "5",
+                    NumberPlate = "51G-12592",
+                    IsWifiAvailable = false,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "29",
+                    CarTypeId = "18",
+                    NumberPlate = "51G-74963",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "30",
+                    CarTypeId = "12",
+                    NumberPlate = "51G-33591",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "31",
+                    CarTypeId = "15",
+                    NumberPlate = "51G-22542",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                },
+                new Car {
+                    Id = "32",
+                    CarTypeId = "17",
+                    NumberPlate = "51G-32014",
+                    IsWifiAvailable = true,
+                    Color = "White"
+                }
+            );
             return modelBuilder;
         }
     }
