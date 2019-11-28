@@ -1,12 +1,13 @@
 import React from "react";
 import { Table as TableStrap, Button } from "reactstrap";
+import { toString } from "../../utilities";
 
 const Table = ({ headers, data, hasActionColumn = false, onActionSelected }) => {
 	return (
 		<TableStrap striped>
 			<thead>
 				<tr>
-					{headers.map(header => <th>{header.display}</th>)}
+					{headers.map(header => !header.isHidden && <th>{header.display}</th>)}
 					{hasActionColumn && <th>Action</th>}
 				</tr>
 			</thead>
@@ -14,7 +15,7 @@ const Table = ({ headers, data, hasActionColumn = false, onActionSelected }) => 
 				{data.map(item => <tr>
 					{headers.map(header => header.name === "id" ?
 						<th scope="row">{item.id}</th> :
-						<td>{item[header.name]}</td>)}
+						!header.isHidden && <td>{toString(item[header.name])}</td>)}
 					{hasActionColumn && <td>
 						<Button color="info" size="sm" onClick={() => onActionSelected(item.id, "edit")}>Edit</Button>&nbsp;
 						<Button color="danger" size="sm" onClick={() => onActionSelected(item.id, "delete")}>Delete</Button>
