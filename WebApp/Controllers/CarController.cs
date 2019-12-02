@@ -5,34 +5,52 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Core.DTO;
 using Core.Entities;
+using Core.Interfaces;
+using Core.Specification;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Controllers {
 	[ApiController]
 	[Route ("/api/car")]
 	public class CarController : ControllerBase {
-		private CarRepository carRepository;
-		private CarTypeRepository carTypeRepository;
+		private GenericRepository<Car> carRepository;
+		private GenericRepository<CarType> carTypeRepository;
 		private readonly IMapper mapper;
 
 		public CarController (IMapper mapper) {
-			this.carRepository = new CarRepository (new ApplicationContext ());
-			this.carTypeRepository = new CarTypeRepository (new ApplicationContext ());
+			this.carRepository = new GenericRepository<Car> (new ApplicationContext ());
+			this.carTypeRepository = new GenericRepository<CarType> (new ApplicationContext ());
 			this.mapper = mapper;
 		}
 
 		[HttpGet]
 		[Route ("~/api/pagination/car")]
 		public async Task<int> CountPages ([FromQuery] int size, [FromQuery] string search = " ") {
-			return await carRepository.CountPages (size, search);
+			ISpecification<Car> carExpSpec =
+				new ExpressionSpecification<Car> (e => EF.Functions.Like (e.NumberPlate, $"%{search.Trim()}%"));
+			return await carRepository.CountPages (size, carExpSpec);
 		}
 
 		[HttpGet]
 		[Route ("~/api/pagination/car/{page}")]
 		public async Task<IEnumerable<CarDTO>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy, [FromQuery] string search = " ") {
-			var carList = await carRepository.GetPaginated (page, size, sortBy, search);
+			ISpecification<Car> carExpSpec =
+				new ExpressionSpecification<Car> (e => EF.Functions.Like (e.NumberPlate, $"%{search.Trim()}%"));
+			switch (sortBy) {
+				case "numberPlate":
+					carExpSpec.orderExpression = a => a.NumberPlate;
+					break;
+				case "color":
+					carExpSpec.orderExpression = a => a.NumberPlate;
+					break;
+				default:
+					carExpSpec.orderExpression = a => a.NumberPlate;
+					break;
+			}
+			var carList = await carRepository.GetPaginated (page, size, carExpSpec);
 			var carTypeList = await carTypeRepository.GetAll ();
 			List<CarDTO> carDTOList = new List<CarDTO> ();
 

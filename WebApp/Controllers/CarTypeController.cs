@@ -2,30 +2,51 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Interfaces;
+using Core.Specification;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Controllers {
     [ApiController]
     [Route ("/api/cartype")]
     public class CarTypeController : ControllerBase {
-        private CarTypeRepository carTypeRepository;
+        private GenericRepository<CarType> carTypeRepository;
 
         public CarTypeController () {
-            this.carTypeRepository = new CarTypeRepository (new ApplicationContext ());
+            this.carTypeRepository = new GenericRepository<CarType> (new ApplicationContext ());
         }
 
         [HttpGet]
         [Route ("~/api/pagination/cartype")]
         public async Task<int> CountPages ([FromQuery] int size, [FromQuery] string search = " ") {
-            return await carTypeRepository.CountPages (size, search);
+            ISpecification<CarType> carTypeExpSpec =
+                new ExpressionSpecification<CarType> (e => EF.Functions.Like (e.Name, $"%{search.Trim()}%"));
+            return await carTypeRepository.CountPages (size, carTypeExpSpec);
         }
 
         [HttpGet]
         [Route ("~/api/pagination/cartype/{page}")]
         public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy, [FromQuery] string search = " ") {
-            return await carTypeRepository.GetPaginated (page, size, sortBy, search);
+            ISpecification<CarType> carTypeExpSpec =
+                new ExpressionSpecification<CarType> (e => EF.Functions.Like (e.Name, $"%{search.Trim()}%"));
+            switch (sortBy) {
+                case "name":
+                    carTypeExpSpec.orderExpression = a => a.Name;
+                    break;
+                case "seat":
+                    carTypeExpSpec.orderExpression = a => a.Seat;
+                    break;
+                case "cost":
+                    carTypeExpSpec.orderExpression = a => a.Cost;
+                    break;
+                default:
+                    carTypeExpSpec.orderExpression = a => a.Id;
+                    break;
+            }
+            return await carTypeRepository.GetPaginated (page, size, carTypeExpSpec);
         }
 
         [HttpGet]
