@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191124020632_Seed")]
-    partial class Seed
+    [Migration("20191128141848_CreateDatabase")]
+    partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,14 +31,237 @@ namespace Infrastructure.Migrations
                     b.Property<string>("NumberPlate")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("isWifiAvailable")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CarTypeId");
 
                     b.ToTable("Car");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            CarTypeId = "19",
+                            Color = "White",
+                            NumberPlate = "51G-23560"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            CarTypeId = "12",
+                            Color = "Silver",
+                            NumberPlate = "51G-69186"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            CarTypeId = "14",
+                            Color = "White",
+                            NumberPlate = "51G-74141"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            CarTypeId = "16",
+                            Color = "White",
+                            NumberPlate = "51G-65404"
+                        },
+                        new
+                        {
+                            Id = "5",
+                            CarTypeId = "10",
+                            Color = "White",
+                            NumberPlate = "94A-19715"
+                        },
+                        new
+                        {
+                            Id = "6",
+                            CarTypeId = "13",
+                            Color = "White",
+                            NumberPlate = "51G-22986"
+                        },
+                        new
+                        {
+                            Id = "7",
+                            CarTypeId = "9",
+                            Color = "Silver",
+                            NumberPlate = "51G-23186"
+                        },
+                        new
+                        {
+                            Id = "8",
+                            CarTypeId = "15",
+                            Color = "White",
+                            NumberPlate = "51G-63428"
+                        },
+                        new
+                        {
+                            Id = "9",
+                            CarTypeId = "18",
+                            Color = "White",
+                            NumberPlate = "51G-75835"
+                        },
+                        new
+                        {
+                            Id = "10",
+                            CarTypeId = "10",
+                            Color = "White",
+                            NumberPlate = "94A-37715"
+                        },
+                        new
+                        {
+                            Id = "11",
+                            CarTypeId = "13",
+                            Color = "White",
+                            NumberPlate = "51G-32986"
+                        },
+                        new
+                        {
+                            Id = "12",
+                            CarTypeId = "21",
+                            Color = "White",
+                            NumberPlate = "61A-76150"
+                        },
+                        new
+                        {
+                            Id = "13",
+                            CarTypeId = "11",
+                            Color = "Black",
+                            NumberPlate = "51G-37128"
+                        },
+                        new
+                        {
+                            Id = "14",
+                            CarTypeId = "11",
+                            Color = "Silver",
+                            NumberPlate = "51G-99604"
+                        },
+                        new
+                        {
+                            Id = "15",
+                            CarTypeId = "13",
+                            Color = "White",
+                            NumberPlate = "51F-56476"
+                        },
+                        new
+                        {
+                            Id = "16",
+                            CarTypeId = "13",
+                            Color = "Dark Blue",
+                            NumberPlate = "51G-89975"
+                        },
+                        new
+                        {
+                            Id = "17",
+                            CarTypeId = "22",
+                            Color = "White",
+                            NumberPlate = "51G-21640"
+                        },
+                        new
+                        {
+                            Id = "18",
+                            CarTypeId = "18",
+                            Color = "White",
+                            NumberPlate = "51A-48815"
+                        },
+                        new
+                        {
+                            Id = "19",
+                            CarTypeId = "14",
+                            Color = "Red",
+                            NumberPlate = "51G-58430"
+                        },
+                        new
+                        {
+                            Id = "20",
+                            CarTypeId = "6",
+                            Color = "White",
+                            NumberPlate = "51G-22488"
+                        },
+                        new
+                        {
+                            Id = "21",
+                            CarTypeId = "5",
+                            Color = "White",
+                            NumberPlate = "51F-12136"
+                        },
+                        new
+                        {
+                            Id = "22",
+                            CarTypeId = "2",
+                            Color = "Silver",
+                            NumberPlate = "51F-90254"
+                        },
+                        new
+                        {
+                            Id = "23",
+                            CarTypeId = "16",
+                            Color = "White",
+                            NumberPlate = "51G-XX404"
+                        },
+                        new
+                        {
+                            Id = "24",
+                            CarTypeId = "14",
+                            Color = "White",
+                            NumberPlate = "51G-57912"
+                        },
+                        new
+                        {
+                            Id = "25",
+                            CarTypeId = "2",
+                            Color = "Black",
+                            NumberPlate = "51H-23163"
+                        },
+                        new
+                        {
+                            Id = "26",
+                            CarTypeId = "4",
+                            Color = "Red",
+                            NumberPlate = "51F-56959"
+                        },
+                        new
+                        {
+                            Id = "27",
+                            CarTypeId = "11",
+                            Color = "Silver",
+                            NumberPlate = "51G-35204"
+                        },
+                        new
+                        {
+                            Id = "28",
+                            CarTypeId = "5",
+                            Color = "White",
+                            NumberPlate = "51G-12592"
+                        },
+                        new
+                        {
+                            Id = "29",
+                            CarTypeId = "18",
+                            Color = "White",
+                            NumberPlate = "51G-74963"
+                        },
+                        new
+                        {
+                            Id = "30",
+                            CarTypeId = "12",
+                            Color = "White",
+                            NumberPlate = "51G-33591"
+                        },
+                        new
+                        {
+                            Id = "31",
+                            CarTypeId = "15",
+                            Color = "White",
+                            NumberPlate = "51G-22542"
+                        },
+                        new
+                        {
+                            Id = "32",
+                            CarTypeId = "17",
+                            Color = "White",
+                            NumberPlate = "51G-32014"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.CarType", b =>

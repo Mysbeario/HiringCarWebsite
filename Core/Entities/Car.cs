@@ -3,7 +3,6 @@ namespace Core.Entities {
         public string CarTypeId { get; set; }
         public string NumberPlate { get; set; }
         public string Color { get; set; }
-        public bool IsWifiAvailable { get; set; }
         
         public virtual CarType CarType { get; set; }
     }

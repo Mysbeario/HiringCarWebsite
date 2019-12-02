@@ -75,43 +75,40 @@ const Manager = ({
 		const form = e.target;
 		const data = new FormData(form);
 
-		await axios.post(`/api/${entityName}`, data).then(() => {
-			form.reset();
-			const newEntity = {};
-			for (let k of data.keys()) {
-				newEntity[k] = data.get(k);
-			}
-			setEntityList([
-				...entities,
-				newEntity
-			]);
-		});
+		await axios.post(`/api/${entityName}`, data)
+		form.reset();
+		const newEntity = {};
+		for (let k of data.keys()) {
+			newEntity[k] = data.get(k);
+		}
+		setEntityList([
+			...entities,
+			newEntity
+		]);
 	};
 
 	const edit = async e => {
 		e.preventDefault();
 		const data = new FormData(e.target);
 
-		await axios.put(`/api/${entityName}/${data.get("Id")}`, data).then(() => {
-			openEditForm(false);
-			const arr = [...entities];
-			let target = arr.find(el => el.id === data.get("Id"));
-			for (let k of data.keys()) {
-				target[k] = data.get(k);
-			}
-			setEntityList(arr);
-		});
+		await axios.put(`/api/${entityName}/${data.get("Id")}`, data)
+		openEditForm(false);
+		const arr = [...entities];
+		let target = arr.find(el => el.id === data.get("Id"));
+		for (let k of data.keys()) {
+			target[k] = data.get(k);
+		}
+		setEntityList(arr);
 	};
 
 	const remove = async e => {
 		e.preventDefault();
 		const data = new FormData(e.target);
 
-		await axios.delete(`/api/${entityName}/${data.get("Id")}`).then(() => {
-			const arr = entities.filter(el => el.id !== data.get("Id"));
-			setEntityList(arr);
-			openDeleteForm(false);
-		});
+		await axios.delete(`/api/${entityName}/${data.get("Id")}`)
+		const arr = entities.filter(el => el.id !== data.get("Id"));
+		setEntityList(arr);
+		openDeleteForm(false);
 	};
 
 	const prepareModifyForm = (id, type) => {

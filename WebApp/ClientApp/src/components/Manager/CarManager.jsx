@@ -12,7 +12,6 @@ const headers = [
 	new TableColumn("color", "Color"),
 	new TableColumn("carTypeName", "Type"),
 	new TableColumn("carTypeId", "Type ID", true),
-	new TableColumn("isWifiAvailable", "Wifi"),
 	new TableColumn("status", "Status")
 ];
 
@@ -61,12 +60,6 @@ const CarManager = () => {
 						{carTypes.map(type => <option value={type.id}>{type.name}</option>)}
 					</Input>
 				</FormGroup>
-				<FormGroup check>
-					<Label check>
-						<Input type="checkbox" name="IsWifiAvailable" id="IsWifiAvailable" onLoad={handleCheckbox} onChange={handleCheckbox} />{" "}
-						Wifi
-					</Label>
-				</FormGroup>
 			</ModalBody>
 			<ModalBody>
 				<Input type="hidden" name="Id" id="Id" value={currentEditedItem.id} />
@@ -84,12 +77,6 @@ const CarManager = () => {
 						{carTypes.map(type => <option value={type.id}>{type.name}</option>)}
 					</Input>
 				</FormGroup>
-				<FormGroup check>
-					<Label check>
-						<Input type="checkbox" name="IsWifiAvailable" id="IsWifiAvailable" />{" "}
-						Wifi
-					</Label>
-				</FormGroup>
 			</ModalBody>
 			<ModalBody>
 				<Input type="hidden" name="Id" id="Id" value={currentEditedItem.id} />
@@ -99,7 +86,6 @@ const CarManager = () => {
 					<li><strong>Number Plate:</strong> {currentEditedItem.numberPlate}</li>
 					<li><strong>Color:</strong> {currentEditedItem.color}</li>
 					<li><strong>Type:</strong> {currentEditedItem.carTypeName}</li>
-					<li><strong>Wifi:</strong> {toString(currentEditedItem.isWifiAvailable)}</li>
 				</ul>
 			</ModalBody>
 		</Manager>

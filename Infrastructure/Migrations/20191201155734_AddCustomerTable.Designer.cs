@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191128050107_SeedCarTable")]
-    partial class SeedCarTable
+    [Migration("20191201155734_AddCustomerTable")]
+    partial class AddCustomerTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsWifiAvailable")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("NumberPlate")
                         .HasColumnType("TEXT");
 
@@ -46,7 +43,6 @@ namespace Infrastructure.Migrations
                             Id = "1",
                             CarTypeId = "19",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-23560"
                         },
                         new
@@ -54,7 +50,6 @@ namespace Infrastructure.Migrations
                             Id = "2",
                             CarTypeId = "12",
                             Color = "Silver",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-69186"
                         },
                         new
@@ -62,7 +57,6 @@ namespace Infrastructure.Migrations
                             Id = "3",
                             CarTypeId = "14",
                             Color = "White",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-74141"
                         },
                         new
@@ -70,7 +64,6 @@ namespace Infrastructure.Migrations
                             Id = "4",
                             CarTypeId = "16",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-65404"
                         },
                         new
@@ -78,7 +71,6 @@ namespace Infrastructure.Migrations
                             Id = "5",
                             CarTypeId = "10",
                             Color = "White",
-                            IsWifiAvailable = false,
                             NumberPlate = "94A-19715"
                         },
                         new
@@ -86,7 +78,6 @@ namespace Infrastructure.Migrations
                             Id = "6",
                             CarTypeId = "13",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-22986"
                         },
                         new
@@ -94,7 +85,6 @@ namespace Infrastructure.Migrations
                             Id = "7",
                             CarTypeId = "9",
                             Color = "Silver",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-23186"
                         },
                         new
@@ -102,7 +92,6 @@ namespace Infrastructure.Migrations
                             Id = "8",
                             CarTypeId = "15",
                             Color = "White",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-63428"
                         },
                         new
@@ -110,7 +99,6 @@ namespace Infrastructure.Migrations
                             Id = "9",
                             CarTypeId = "18",
                             Color = "White",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-75835"
                         },
                         new
@@ -118,7 +106,6 @@ namespace Infrastructure.Migrations
                             Id = "10",
                             CarTypeId = "10",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "94A-37715"
                         },
                         new
@@ -126,7 +113,6 @@ namespace Infrastructure.Migrations
                             Id = "11",
                             CarTypeId = "13",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-32986"
                         },
                         new
@@ -134,7 +120,6 @@ namespace Infrastructure.Migrations
                             Id = "12",
                             CarTypeId = "21",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "61A-76150"
                         },
                         new
@@ -142,7 +127,6 @@ namespace Infrastructure.Migrations
                             Id = "13",
                             CarTypeId = "11",
                             Color = "Black",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-37128"
                         },
                         new
@@ -150,7 +134,6 @@ namespace Infrastructure.Migrations
                             Id = "14",
                             CarTypeId = "11",
                             Color = "Silver",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-99604"
                         },
                         new
@@ -158,7 +141,6 @@ namespace Infrastructure.Migrations
                             Id = "15",
                             CarTypeId = "13",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51F-56476"
                         },
                         new
@@ -166,7 +148,6 @@ namespace Infrastructure.Migrations
                             Id = "16",
                             CarTypeId = "13",
                             Color = "Dark Blue",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-89975"
                         },
                         new
@@ -174,7 +155,6 @@ namespace Infrastructure.Migrations
                             Id = "17",
                             CarTypeId = "22",
                             Color = "White",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-21640"
                         },
                         new
@@ -182,7 +162,6 @@ namespace Infrastructure.Migrations
                             Id = "18",
                             CarTypeId = "18",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51A-48815"
                         },
                         new
@@ -190,7 +169,6 @@ namespace Infrastructure.Migrations
                             Id = "19",
                             CarTypeId = "14",
                             Color = "Red",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-58430"
                         },
                         new
@@ -198,7 +176,6 @@ namespace Infrastructure.Migrations
                             Id = "20",
                             CarTypeId = "6",
                             Color = "White",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-22488"
                         },
                         new
@@ -206,7 +183,6 @@ namespace Infrastructure.Migrations
                             Id = "21",
                             CarTypeId = "5",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51F-12136"
                         },
                         new
@@ -214,7 +190,6 @@ namespace Infrastructure.Migrations
                             Id = "22",
                             CarTypeId = "2",
                             Color = "Silver",
-                            IsWifiAvailable = true,
                             NumberPlate = "51F-90254"
                         },
                         new
@@ -222,7 +197,6 @@ namespace Infrastructure.Migrations
                             Id = "23",
                             CarTypeId = "16",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-XX404"
                         },
                         new
@@ -230,7 +204,6 @@ namespace Infrastructure.Migrations
                             Id = "24",
                             CarTypeId = "14",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-57912"
                         },
                         new
@@ -238,7 +211,6 @@ namespace Infrastructure.Migrations
                             Id = "25",
                             CarTypeId = "2",
                             Color = "Black",
-                            IsWifiAvailable = true,
                             NumberPlate = "51H-23163"
                         },
                         new
@@ -246,7 +218,6 @@ namespace Infrastructure.Migrations
                             Id = "26",
                             CarTypeId = "4",
                             Color = "Red",
-                            IsWifiAvailable = true,
                             NumberPlate = "51F-56959"
                         },
                         new
@@ -254,7 +225,6 @@ namespace Infrastructure.Migrations
                             Id = "27",
                             CarTypeId = "11",
                             Color = "Silver",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-35204"
                         },
                         new
@@ -262,7 +232,6 @@ namespace Infrastructure.Migrations
                             Id = "28",
                             CarTypeId = "5",
                             Color = "White",
-                            IsWifiAvailable = false,
                             NumberPlate = "51G-12592"
                         },
                         new
@@ -270,7 +239,6 @@ namespace Infrastructure.Migrations
                             Id = "29",
                             CarTypeId = "18",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-74963"
                         },
                         new
@@ -278,7 +246,6 @@ namespace Infrastructure.Migrations
                             Id = "30",
                             CarTypeId = "12",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-33591"
                         },
                         new
@@ -286,7 +253,6 @@ namespace Infrastructure.Migrations
                             Id = "31",
                             CarTypeId = "15",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-22542"
                         },
                         new
@@ -294,7 +260,6 @@ namespace Infrastructure.Migrations
                             Id = "32",
                             CarTypeId = "17",
                             Color = "White",
-                            IsWifiAvailable = true,
                             NumberPlate = "51G-32014"
                         });
                 });
@@ -502,11 +467,58 @@ namespace Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Core.Entities.CustomerAggregate.CustomerAccount", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerAccount");
+                });
+
+            modelBuilder.Entity("Core.Entities.CustomerAggregate.CustomerDetail", b =>
+                {
+                    b.Property<string>("CustomerAccountId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CustomerAccountId");
+
+                    b.ToTable("CustomerDetail");
+                });
+
             modelBuilder.Entity("Core.Entities.Car", b =>
                 {
                     b.HasOne("Core.Entities.CarType", "CarType")
                         .WithMany("Cars")
                         .HasForeignKey("CarTypeId");
+                });
+
+            modelBuilder.Entity("Core.Entities.CustomerAggregate.CustomerDetail", b =>
+                {
+                    b.HasOne("Core.Entities.CustomerAggregate.CustomerAccount", "CustomerAccount")
+                        .WithOne("CustomerDetail")
+                        .HasForeignKey("Core.Entities.CustomerAggregate.CustomerDetail", "CustomerAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
