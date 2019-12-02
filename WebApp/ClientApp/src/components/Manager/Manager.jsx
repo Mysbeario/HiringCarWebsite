@@ -75,7 +75,7 @@ const Manager = ({
 		const form = e.target;
 		const data = new FormData(form);
 
-		await axios.post(`/api/${entityName}`, data)
+		await axios.post(`/api/${entityName}`, data);
 		form.reset();
 		const newEntity = {};
 		for (let k of data.keys()) {
@@ -91,7 +91,7 @@ const Manager = ({
 		e.preventDefault();
 		const data = new FormData(e.target);
 
-		await axios.put(`/api/${entityName}/${data.get("Id")}`, data)
+		await axios.put(`/api/${entityName}/${data.get("Id")}`, data);
 		openEditForm(false);
 		const arr = [...entities];
 		let target = arr.find(el => el.id === data.get("Id"));
@@ -105,7 +105,7 @@ const Manager = ({
 		e.preventDefault();
 		const data = new FormData(e.target);
 
-		await axios.delete(`/api/${entityName}/${data.get("Id")}`)
+		await axios.delete(`/api/${entityName}/${data.get("Id")}`);
 		const arr = entities.filter(el => el.id !== data.get("Id"));
 		setEntityList(arr);
 		openDeleteForm(false);

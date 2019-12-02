@@ -4,7 +4,6 @@ import Manager from "./Manager";
 import TableColumn from "../../types/TableColumn";
 import Car from "../../types/Car";
 import axios from "axios";
-import { toString } from "../../utilities";
 
 const headers = [
 	new TableColumn("id", "ID"),
@@ -14,16 +13,6 @@ const headers = [
 	new TableColumn("carTypeId", "Type ID", true),
 	new TableColumn("status", "Status")
 ];
-
-const handleCheckbox = e => {
-	const chk = e.target;
-	if (chk.checked) {
-		chk.value = true;
-	}
-	else {
-		chk.value = false;
-	}
-}
 
 const CarManager = () => {
 	const [currentEditedItem, setCurrentEditedItem] = useState(new Car());

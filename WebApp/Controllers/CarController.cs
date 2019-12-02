@@ -44,10 +44,13 @@ namespace WebApp.Controllers {
 					carExpSpec.orderExpression = a => a.NumberPlate;
 					break;
 				case "color":
-					carExpSpec.orderExpression = a => a.NumberPlate;
+					carExpSpec.orderExpression = a => a.Color;
+					break;
+				case "carTypeId":
+					carExpSpec.orderExpression = a => a.CarTypeId;
 					break;
 				default:
-					carExpSpec.orderExpression = a => a.NumberPlate;
+					carExpSpec.orderExpression = a => a.Id;
 					break;
 			}
 			var carList = await carRepository.GetPaginated (page, size, carExpSpec);
