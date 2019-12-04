@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories {
 		public async Task<IEnumerable<T>> GetPaginated (int page, int size, ISpecification<T> spec) {
 			return (await OrderBy (spec)).Skip ((page - 1) * size).Take (size);
 		}
-		public async Task<T> GetById (string id) {
+		public async Task<T> GetById (int id) {
 			return await _context.Set<T> ().FindAsync (id);
 		}
 		public async Task Create (T entity) {
@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories {
 			_context.Entry (entity).State = EntityState.Modified;
 			await _context.SaveChangesAsync ();
 		}
-		public async Task Delete (string id) {
+		public async Task Delete (int id) {
 			var target = await _context.Set<T> ().FindAsync (id);
 			_context.Set<T> ().Remove (target);
 			await _context.SaveChangesAsync ();

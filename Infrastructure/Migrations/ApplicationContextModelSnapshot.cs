@@ -17,11 +17,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Car", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("CarTypeId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CarTypeId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Color")
                         .HasColumnType("TEXT");
@@ -38,225 +39,225 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
-                            CarTypeId = "19",
+                            Id = 1,
+                            CarTypeId = 19,
                             Color = "White",
                             NumberPlate = "51G-23560"
                         },
                         new
                         {
-                            Id = "2",
-                            CarTypeId = "12",
+                            Id = 2,
+                            CarTypeId = 12,
                             Color = "Silver",
                             NumberPlate = "51G-69186"
                         },
                         new
                         {
-                            Id = "3",
-                            CarTypeId = "14",
+                            Id = 3,
+                            CarTypeId = 14,
                             Color = "White",
                             NumberPlate = "51G-74141"
                         },
                         new
                         {
-                            Id = "4",
-                            CarTypeId = "16",
+                            Id = 4,
+                            CarTypeId = 16,
                             Color = "White",
                             NumberPlate = "51G-65404"
                         },
                         new
                         {
-                            Id = "5",
-                            CarTypeId = "10",
+                            Id = 5,
+                            CarTypeId = 10,
                             Color = "White",
                             NumberPlate = "94A-19715"
                         },
                         new
                         {
-                            Id = "6",
-                            CarTypeId = "13",
+                            Id = 6,
+                            CarTypeId = 13,
                             Color = "White",
                             NumberPlate = "51G-22986"
                         },
                         new
                         {
-                            Id = "7",
-                            CarTypeId = "9",
+                            Id = 7,
+                            CarTypeId = 9,
                             Color = "Silver",
                             NumberPlate = "51G-23186"
                         },
                         new
                         {
-                            Id = "8",
-                            CarTypeId = "15",
+                            Id = 8,
+                            CarTypeId = 15,
                             Color = "White",
                             NumberPlate = "51G-63428"
                         },
                         new
                         {
-                            Id = "9",
-                            CarTypeId = "18",
+                            Id = 9,
+                            CarTypeId = 18,
                             Color = "White",
                             NumberPlate = "51G-75835"
                         },
                         new
                         {
-                            Id = "10",
-                            CarTypeId = "10",
+                            Id = 10,
+                            CarTypeId = 10,
                             Color = "White",
                             NumberPlate = "94A-37715"
                         },
                         new
                         {
-                            Id = "11",
-                            CarTypeId = "13",
+                            Id = 11,
+                            CarTypeId = 13,
                             Color = "White",
                             NumberPlate = "51G-32986"
                         },
                         new
                         {
-                            Id = "12",
-                            CarTypeId = "21",
+                            Id = 12,
+                            CarTypeId = 21,
                             Color = "White",
                             NumberPlate = "61A-76150"
                         },
                         new
                         {
-                            Id = "13",
-                            CarTypeId = "11",
+                            Id = 13,
+                            CarTypeId = 11,
                             Color = "Black",
                             NumberPlate = "51G-37128"
                         },
                         new
                         {
-                            Id = "14",
-                            CarTypeId = "11",
+                            Id = 14,
+                            CarTypeId = 11,
                             Color = "Silver",
                             NumberPlate = "51G-99604"
                         },
                         new
                         {
-                            Id = "15",
-                            CarTypeId = "13",
+                            Id = 15,
+                            CarTypeId = 13,
                             Color = "White",
                             NumberPlate = "51F-56476"
                         },
                         new
                         {
-                            Id = "16",
-                            CarTypeId = "13",
+                            Id = 16,
+                            CarTypeId = 13,
                             Color = "Dark Blue",
                             NumberPlate = "51G-89975"
                         },
                         new
                         {
-                            Id = "17",
-                            CarTypeId = "22",
+                            Id = 17,
+                            CarTypeId = 22,
                             Color = "White",
                             NumberPlate = "51G-21640"
                         },
                         new
                         {
-                            Id = "18",
-                            CarTypeId = "18",
+                            Id = 18,
+                            CarTypeId = 18,
                             Color = "White",
                             NumberPlate = "51A-48815"
                         },
                         new
                         {
-                            Id = "19",
-                            CarTypeId = "14",
+                            Id = 19,
+                            CarTypeId = 14,
                             Color = "Red",
                             NumberPlate = "51G-58430"
                         },
                         new
                         {
-                            Id = "20",
-                            CarTypeId = "6",
+                            Id = 20,
+                            CarTypeId = 6,
                             Color = "White",
                             NumberPlate = "51G-22488"
                         },
                         new
                         {
-                            Id = "21",
-                            CarTypeId = "5",
+                            Id = 21,
+                            CarTypeId = 5,
                             Color = "White",
                             NumberPlate = "51F-12136"
                         },
                         new
                         {
-                            Id = "22",
-                            CarTypeId = "2",
+                            Id = 22,
+                            CarTypeId = 2,
                             Color = "Silver",
                             NumberPlate = "51F-90254"
                         },
                         new
                         {
-                            Id = "23",
-                            CarTypeId = "16",
+                            Id = 23,
+                            CarTypeId = 16,
                             Color = "White",
                             NumberPlate = "51G-XX404"
                         },
                         new
                         {
-                            Id = "24",
-                            CarTypeId = "14",
+                            Id = 24,
+                            CarTypeId = 14,
                             Color = "White",
                             NumberPlate = "51G-57912"
                         },
                         new
                         {
-                            Id = "25",
-                            CarTypeId = "2",
+                            Id = 25,
+                            CarTypeId = 2,
                             Color = "Black",
                             NumberPlate = "51H-23163"
                         },
                         new
                         {
-                            Id = "26",
-                            CarTypeId = "4",
+                            Id = 26,
+                            CarTypeId = 4,
                             Color = "Red",
                             NumberPlate = "51F-56959"
                         },
                         new
                         {
-                            Id = "27",
-                            CarTypeId = "11",
+                            Id = 27,
+                            CarTypeId = 11,
                             Color = "Silver",
                             NumberPlate = "51G-35204"
                         },
                         new
                         {
-                            Id = "28",
-                            CarTypeId = "5",
+                            Id = 28,
+                            CarTypeId = 5,
                             Color = "White",
                             NumberPlate = "51G-12592"
                         },
                         new
                         {
-                            Id = "29",
-                            CarTypeId = "18",
+                            Id = 29,
+                            CarTypeId = 18,
                             Color = "White",
                             NumberPlate = "51G-74963"
                         },
                         new
                         {
-                            Id = "30",
-                            CarTypeId = "12",
+                            Id = 30,
+                            CarTypeId = 12,
                             Color = "White",
                             NumberPlate = "51G-33591"
                         },
                         new
                         {
-                            Id = "31",
-                            CarTypeId = "15",
+                            Id = 31,
+                            CarTypeId = 15,
                             Color = "White",
                             NumberPlate = "51G-22542"
                         },
                         new
                         {
-                            Id = "32",
-                            CarTypeId = "17",
+                            Id = 32,
+                            CarTypeId = 17,
                             Color = "White",
                             NumberPlate = "51G-32014"
                         });
@@ -264,8 +265,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.CarType", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("TEXT");
@@ -283,182 +285,182 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = 1,
                             Cost = 700000m,
                             Name = "Ford EcoSport",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "2",
+                            Id = 2,
                             Cost = 1500000m,
                             Name = "Ford Everest",
                             Seat = (byte)7
                         },
                         new
                         {
-                            Id = "3",
+                            Id = 3,
                             Cost = 700000m,
                             Name = "Ford Fiesta",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "4",
+                            Id = 4,
                             Cost = 500000m,
                             Name = "Kia Morning",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "5",
+                            Id = 5,
                             Cost = 700000m,
                             Name = "Kia Cerato",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "6",
+                            Id = 6,
                             Cost = 1100000m,
                             Name = "Kia Sorento",
                             Seat = (byte)7
                         },
                         new
                         {
-                            Id = "7",
+                            Id = 7,
                             Cost = 800000m,
                             Name = "Rondo",
                             Seat = (byte)7
                         },
                         new
                         {
-                            Id = "8",
+                            Id = 8,
                             Cost = 1600000m,
                             Name = "Sendona",
                             Seat = (byte)8
                         },
                         new
                         {
-                            Id = "9",
+                            Id = 9,
                             Cost = 100000m,
                             Name = "Camry",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "10",
+                            Id = 10,
                             Cost = 1200000m,
                             Name = "Fortuner",
                             Seat = (byte)7
                         },
                         new
                         {
-                            Id = "11",
+                            Id = 11,
                             Cost = 700000m,
                             Name = "Innova",
                             Seat = (byte)7
                         },
                         new
                         {
-                            Id = "12",
+                            Id = 12,
                             Cost = 900000m,
                             Name = "Toyota Corrola Altis",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "13",
+                            Id = 13,
                             Cost = 800000m,
                             Name = "Mazda 3",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "14",
+                            Id = 14,
                             Cost = 1200000m,
                             Name = "Mazda CX5",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "15",
+                            Id = 15,
                             Cost = 2000000m,
                             Name = "Mescedes CLA",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "16",
+                            Id = 16,
                             Cost = 2000000m,
                             Name = "Mescedes C200",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "17",
+                            Id = 17,
                             Cost = 2200000m,
                             Name = "Mescedes C250",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "18",
+                            Id = 18,
                             Cost = 700000m,
                             Name = "Honda City",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "19",
+                            Id = 19,
                             Cost = 800000m,
                             Name = "Honda City TOP",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "20",
+                            Id = 20,
                             Cost = 1200000m,
                             Name = "Chevrolet Blazetrailer",
                             Seat = (byte)7
                         },
                         new
                         {
-                            Id = "21",
+                            Id = 21,
                             Cost = 600000m,
                             Name = "Vinfast Fadil",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "22",
+                            Id = 22,
                             Cost = 900000m,
                             Name = "Huyndai Kona",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "23",
+                            Id = 23,
                             Cost = 1400000m,
                             Name = "Peugoet",
                             Seat = (byte)5
                         },
                         new
                         {
-                            Id = "24",
+                            Id = 24,
                             Cost = 1500000m,
                             Name = "Ford Tourneo",
                             Seat = (byte)7
                         },
                         new
                         {
-                            Id = "25",
+                            Id = 25,
                             Cost = 1300000m,
                             Name = "Mazda 6",
                             Seat = (byte)4
                         },
                         new
                         {
-                            Id = "26",
+                            Id = 26,
                             Cost = 1100000m,
                             Name = "Honda Civic",
                             Seat = (byte)5
@@ -467,8 +469,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.CustomerAggregate.CustomerAccount", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -486,8 +489,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.CustomerAggregate.CustomerDetail", b =>
                 {
-                    b.Property<string>("CustomerAccountId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerAccountId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
@@ -498,7 +505,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CustomerAccountId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerAccountId")
+                        .IsUnique();
 
                     b.ToTable("CustomerDetail");
                 });
@@ -507,7 +517,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entities.CarType", "CarType")
                         .WithMany("Cars")
-                        .HasForeignKey("CarTypeId");
+                        .HasForeignKey("CarTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.CustomerAggregate.CustomerDetail", b =>

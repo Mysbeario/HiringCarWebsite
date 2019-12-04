@@ -56,12 +56,16 @@ namespace WebApp.Controllers {
 
         [HttpPost]
         public async Task Create ([FromForm] CarType carType) {
-            await carTypeRepository.Create (carType);
+            await carTypeRepository.Create (new CarType {
+                Name = carType.Name,
+                Cost = carType.Cost,
+                Seat = carType.Seat
+            });
         }
 
         [HttpGet]
         [Route ("{id}")]
-        public async Task<CarType> GetByID (string id) {
+        public async Task<CarType> GetByID (int id) {
             Console.WriteLine ("{id}");
             return await carTypeRepository.GetById (id);
         }
@@ -74,7 +78,7 @@ namespace WebApp.Controllers {
 
         [HttpDelete]
         [Route ("{id}")]
-        public async Task Delete (string id) {
+        public async Task Delete (int id) {
             await carTypeRepository.Delete (id);
         }
     }

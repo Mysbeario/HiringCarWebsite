@@ -79,7 +79,7 @@ namespace WebApp.Controllers {
 
 		[HttpGet]
 		[Route ("{id}")]
-		public async Task<Car> GetByID (string id) {
+		public async Task<Car> GetByID (int id) {
 			Console.WriteLine ("{id}");
 			return await carRepository.GetById (id);
 		}
@@ -92,7 +92,7 @@ namespace WebApp.Controllers {
 
 		[HttpDelete]
 		[Route ("{id}")]
-		public async Task Delete (string id) {
+		public async Task Delete (int id) {
 			await carRepository.Delete (id);
 		}
 	}

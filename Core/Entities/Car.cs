@@ -1,6 +1,6 @@
 namespace Core.Entities {
     public class Car: BaseEntity {
-        public string CarTypeId { get; set; }
+        public int CarTypeId { get; set; }
         public string NumberPlate { get; set; }
         public string Color { get; set; }
         

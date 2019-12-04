@@ -4,7 +4,7 @@ namespace Core.Entities.CustomerAggregate
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public bool IsBlocked { get; set; }
+        public bool IsBlocked { get; set; } = false;
         public CustomerDetail CustomerDetail { get; private set;}
 
         public void CreateProfile (CustomerDetail profile) {

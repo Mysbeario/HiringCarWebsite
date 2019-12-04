@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import React, { useState } from "react";
+import { Form, FormGroup, Label, Input, Button, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -13,18 +13,49 @@ const SignUpFormWrapper = styled.div`
 `;
 
 const SignUp = () => {
+	const [validationErrors, setValidationErrorList] = useState([]);
+
 	const create = e => {
+		e.preventDefault();
 		const form = e.target;
 		const data = new FormData(form);
+		const errors = [];
 
-		(async () => {
-			await axios.post("/api/customer", data);
-			form.reset();
-		})()
+		for (const k of data.values()) {
+			if (k.length === 0) {
+				errors.push("All fields must be filled!");
+				break;
+			}
+		}
+
+		if (!/^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/.test(data.get("Email"))) {
+			errors.push("Invalid email address!");
+		}
+
+		if (data.get("Password").length <= 8 || data.get("Password").length >= 32) {
+			errors.push("Password length must be 8 - 32 characters!");
+		}
+		else if (data.get("Password") !== data.get("ConfirmPassword")) {
+			errors.push("Password does not match!");
+		}
+
+		setValidationErrorList(errors);
+
+		if (!errors.length) {
+			(async () => {
+				await axios.post("/api/customer", data);
+				form.reset();
+			})();
+		}
 	};
 
 	return (
 		<SignUpFormWrapper>
+			{!!validationErrors.length && <Alert color="danger">
+				<ul>
+					{validationErrors.map(err => <li>{err}</li>)}
+				</ul>
+			</Alert>}
 			<Form onSubmit={create}>
 				<h1>Create New Account</h1>
 				<hr />

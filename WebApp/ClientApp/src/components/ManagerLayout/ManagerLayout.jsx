@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Col, Row, Nav, NavItem, NavLink } from "reactstrap";
 import { Link, Route, useRouteMatch, Switch } from "react-router-dom";
-import { CarTypeManager, CarManager } from "../Manager";
+import { CarManager, CarTypeManager } from "../Manager";
 
 const ManagerLayout = () => {
 	const { path, url } = useRouteMatch();
