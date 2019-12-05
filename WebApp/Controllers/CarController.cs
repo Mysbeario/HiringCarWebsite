@@ -11,17 +11,19 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace WebApp.Controllers {
 	[ApiController]
 	[Route ("/api/car")]
 	public class CarController : ControllerBase {
-		private GenericRepository<Car> carRepository;
+		private CarRepository carRepository;
 		private GenericRepository<CarType> carTypeRepository;
 		private readonly IMapper mapper;
 
 		public CarController (IMapper mapper) {
-			this.carRepository = new GenericRepository<Car> (new ApplicationContext ());
+			this.carRepository = new CarRepository (new ApplicationContext ());
 			this.carTypeRepository = new GenericRepository<CarType> (new ApplicationContext ());
 			this.mapper = mapper;
 		}
@@ -73,14 +75,21 @@ namespace WebApp.Controllers {
 		}
 
 		[HttpPost]
-		public async Task Create ([FromForm] Car car) {
+		public async Task Create ([FromForm] Car car, [FromForm] IFormFile image) {
+			byte[] file;
+			using (var memoryStream = new MemoryStream()) {
+				await image.CopyToAsync(memoryStream);
+				file = memoryStream.ToArray();
+			}
+
+			var name = $"img_{car.NumberPlate.Replace(" ", "").Replace("-", "_")}";
+			await carRepository.UploadImage(file, name);
 			await carRepository.Create (car);
 		}
 
 		[HttpGet]
 		[Route ("{id}")]
 		public async Task<Car> GetByID (int id) {
-			Console.WriteLine ("{id}");
 			return await carRepository.GetById (id);
 		}
 

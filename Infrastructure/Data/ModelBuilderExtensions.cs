@@ -168,193 +168,225 @@ namespace Infrastructure.Data {
                     Id = 1,
                     CarTypeId = 19,
                     NumberPlate = "51G-23560",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_23560"
                 },
                 new Car {
                     Id = 2,
                     CarTypeId = 12,
                     NumberPlate = "51G-69186",
-                    Color = "Silver"
+                    Color = "Silver",
+                    ImgPath = "img_51G_69186"
                 },
                 new Car {
                     Id = 3,
                     CarTypeId = 14,
                     NumberPlate = "51G-74141",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_74141"
                 },
                 new Car {
                     Id = 4,
                     CarTypeId = 16,
                     NumberPlate = "51G-65404",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_65404"
                 },
                 new Car {
                     Id = 5,
                     CarTypeId = 10,
                     NumberPlate = "94A-19715",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_94A_19715"
                 },
                 new Car {
                     Id = 6,
                     CarTypeId = 13,
                     NumberPlate = "51G-22986",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_22986"
                 },
                 new Car {
                     Id = 7,
                     CarTypeId = 9,
                     NumberPlate = "51G-23186",
-                    Color = "Silver"
+                    Color = "Silver",
+                    ImgPath = "img_51G_23186"
                 },
                 new Car {
                     Id = 8,
                     CarTypeId = 15,
                     NumberPlate = "51G-63428",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_63428"
                 },
                 new Car {
                     Id = 9,
                     CarTypeId = 18,
                     NumberPlate = "51G-75835",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_75835"
                 },
                 new Car {
                     Id = 10,
                     CarTypeId = 10,
                     NumberPlate = "94A-37715",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_94A_37715"
                 },
                 new Car {
                     Id = 11,
                     CarTypeId = 13,
                     NumberPlate = "51G-32986",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_32986"
                 },
                 new Car {
                     Id = 12,
                     CarTypeId = 21,
                     NumberPlate = "61A-76150",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_61A_76150"
                 },
                 new Car {
                     Id = 13,
                     CarTypeId = 11,
                     NumberPlate = "51G-37128",
-                    Color = "Black"
+                    Color = "Black",
+                    ImgPath = "img_51G_37128"
                 },
                 new Car {
                     Id = 14,
                     CarTypeId = 11,
                     NumberPlate = "51G-99604",
-                    Color = "Silver"
+                    Color = "Silver",
+                    ImgPath = "img_51G_99604"
                 },
                 new Car {
                     Id = 15,
                     CarTypeId = 13,
                     NumberPlate = "51F-56476",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51F_56476"
                 },
                 new Car {
                     Id = 16,
                     CarTypeId = 13,
                     NumberPlate = "51G-89975",
-                    Color = "Dark Blue"
+                    Color = "Dark Blue",
+                    ImgPath = "img_51G_89975"
                 },
                 new Car {
                     Id = 17,
                     CarTypeId = 22,
                     NumberPlate = "51G-21640",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_21640"
                 },
                 new Car {
                     Id = 18,
                     CarTypeId = 18,
                     NumberPlate = "51A-48815",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51A_48815"
                 },
                 new Car {
                     Id = 19,
                     CarTypeId = 14,
                     NumberPlate = "51G-58430",
-                    Color = "Red"
+                    Color = "Red",
+                    ImgPath = "img_51G_58430"
                 },
                 new Car {
                     Id = 20,
                     CarTypeId = 6,
                     NumberPlate = "51G-22488",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_22488"
                 },
                 new Car {
                     Id = 21,
                     CarTypeId = 5,
                     NumberPlate = "51F-12136",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51F_12136"
                 },
                 new Car {
                     Id = 22,
                     CarTypeId = 2,
                     NumberPlate = "51F-90254",
-                    Color = "Silver"
+                    Color = "Silver",
+                    ImgPath = "img_51F_90254"
                 },
                 new Car {
                     Id = 23,
                     CarTypeId = 16,
-                    NumberPlate = "51G-XX404",
-                    Color = "White"
+                    NumberPlate = "51G-66404",
+                    Color = "White",
+                    ImgPath = "img_51G_66404"
                 },
                 new Car {
                     Id = 24,
                     CarTypeId = 14,
                     NumberPlate = "51G-57912",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_57912"
                 },
                 new Car {
                     Id = 25,
                     CarTypeId = 2,
                     NumberPlate = "51H-23163",
-                    Color = "Black"
+                    Color = "Black",
+                    ImgPath = "img_51H_23163"
                 },
                 new Car {
                     Id = 26,
                     CarTypeId = 4,
                     NumberPlate = "51F-56959",
-                    Color = "Red"
+                    Color = "Red",
+                    ImgPath = "img_51F_56959"
                 },
                 new Car {
                     Id = 27,
                     CarTypeId = 11,
                     NumberPlate = "51G-35204",
-                    Color = "Silver"
+                    Color = "Silver",
+                    ImgPath = "img_51G_35204"
                 },
                 new Car {
                     Id = 28,
                     CarTypeId = 5,
                     NumberPlate = "51G-12592",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_12592"
                 },
                 new Car {
                     Id = 29,
                     CarTypeId = 18,
                     NumberPlate = "51G-74963",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_74963"
                 },
                 new Car {
                     Id = 30,
                     CarTypeId = 12,
                     NumberPlate = "51G-33591",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_33591"
                 },
                 new Car {
                     Id = 31,
                     CarTypeId = 15,
                     NumberPlate = "51G-22542",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_22542"
                 },
                 new Car {
                     Id = 32,
                     CarTypeId = 17,
                     NumberPlate = "51G-32014",
-                    Color = "White"
+                    Color = "White",
+                    ImgPath = "img_51G_32014"
                 }
             );
             return modelBuilder;

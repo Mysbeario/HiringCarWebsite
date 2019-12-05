@@ -7,6 +7,7 @@ const AddCarForm = ({ isOpen, toggle, onSubmit, carTypeList }) => {
 		e.preventDefault();
 		const form = e.target;
 		const formData = new FormData(form);
+		formData.append("image", form.elements["CarImage"].files[0]);
 		await axios.post("api/car", formData);
 		form.reset();
 		onSubmit();
@@ -31,11 +32,16 @@ const AddCarForm = ({ isOpen, toggle, onSubmit, carTypeList }) => {
 							{carTypeList.map(type => <option value={type.id}>{type.name}</option>)}
 						</Input>
 					</FormGroup>
+					<FormGroup>
+						<Label for="CarImage">Image</Label>
+						<Input type="file" name="CarImage" id="CarImage" />
+					</FormGroup>
 				</ModalBody>
 				<ModalFooter>
 					<Button color="primary" type="submit">Add</Button>
 					<Button color="danger" type="reset">Reset</Button>
 				</ModalFooter>
+				<img src="/api/image/mysbeario" />
 			</Form>
 		</Modal>
 	);

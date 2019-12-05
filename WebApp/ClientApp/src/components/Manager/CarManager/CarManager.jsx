@@ -8,10 +8,20 @@ import AddCarForm from "./AddCarForm";
 import EditCarForm from "./EditCarForm";
 import DeleteForm from "./DeleteCarForm";
 import { ManagerContext } from "../ManagerHOC";
+import ViewDataModal from "./ViewDataModal";
 
 const CarManager = () => {
 	const [carTypes, setCarTypeList] = useState([]);
+	const [isViewModalOpen, openViewModal] = useState(false);
 	const ctx = useContext(ManagerContext);
+
+	const modifyData = (action, id) => {
+		ctx.modifyData(action, id);
+
+		if (action === "view") {
+			openViewModal(true);
+		}
+	}
 
 	useEffect(() => {
 		(async () => {
@@ -37,7 +47,7 @@ const CarManager = () => {
 				</Col>
 			</Row>
 			<Row>
-				<CarTable data={ctx.entityData} onAction={ctx.modifyData} />
+				<CarTable data={ctx.entityData} onAction={modifyData} />
 			</Row>
 			<Row>
 				<Button color="primary" onClick={() => ctx.openAddForm(!ctx.isAddFormOpen)}>Add New +</Button>
@@ -62,6 +72,11 @@ const CarManager = () => {
 				isOpen={ctx.isDeleteFormOpen}
 				toggle={() => ctx.openDeleteForm(!ctx.isDeleteFormOpen)}
 				onSubmit={ctx.updateData}
+				item={ctx.findItem(ctx.currentEditedItem)}
+			/>
+			<ViewDataModal
+				isOpen={isViewModalOpen}
+				toggle={() => openViewModal(!isViewModalOpen)}
 				item={ctx.findItem(ctx.currentEditedItem)}
 			/>
 		</Container>

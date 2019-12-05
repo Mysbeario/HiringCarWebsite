@@ -3,6 +3,7 @@ namespace Core.Entities {
         public int CarTypeId { get; set; }
         public string NumberPlate { get; set; }
         public string Color { get; set; }
+        public string ImgPath { get; set; }
         
         public virtual CarType CarType { get; set; }
     }
