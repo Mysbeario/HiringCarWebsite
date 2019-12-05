@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,10 +10,9 @@ using Core.Interfaces;
 using Core.Specification;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 
 namespace WebApp.Controllers {
 	[ApiController]
@@ -77,13 +77,15 @@ namespace WebApp.Controllers {
 		[HttpPost]
 		public async Task Create ([FromForm] Car car, [FromForm] IFormFile image) {
 			byte[] file;
-			using (var memoryStream = new MemoryStream()) {
-				await image.CopyToAsync(memoryStream);
-				file = memoryStream.ToArray();
+			using (var memoryStream = new MemoryStream ()) {
+				await image.CopyToAsync (memoryStream);
+				file = memoryStream.ToArray ();
 			}
 
 			var name = $"img_{car.NumberPlate.Replace(" ", "").Replace("-", "_")}";
-			await carRepository.UploadImage(file, name);
+			car.ImgPath = name;
+
+			await carRepository.UploadImage (file, name);
 			await carRepository.Create (car);
 		}
 
@@ -95,7 +97,19 @@ namespace WebApp.Controllers {
 
 		[HttpPut]
 		[Route ("{id}")]
-		public async Task Update ([FromForm] Car car) {
+		public async Task Update ([FromForm] Car car, [FromForm] IFormFile image) {
+			if (image != null) {
+				byte[] file;
+				using (var memoryStream = new MemoryStream ()) {
+					await image.CopyToAsync (memoryStream);
+					file = memoryStream.ToArray ();
+				}
+
+				var name = $"img_{car.NumberPlate.Replace(" ", "").Replace("-", "_")}";
+				car.ImgPath = name;
+
+				await carRepository.UploadImage (file, name);
+			}
 			await carRepository.Update (car);
 		}
 

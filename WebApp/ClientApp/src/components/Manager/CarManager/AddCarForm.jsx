@@ -41,7 +41,6 @@ const AddCarForm = ({ isOpen, toggle, onSubmit, carTypeList }) => {
 					<Button color="primary" type="submit">Add</Button>
 					<Button color="danger" type="reset">Reset</Button>
 				</ModalFooter>
-				<img src="/api/image/mysbeario" />
 			</Form>
 		</Modal>
 	);
