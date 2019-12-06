@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Container, Row, Button, Col, Input } from "reactstrap";
 import SearchBox from "../SearchBox";
 import CarTypeTable from "./CarTypeTable";
-import Pagination from "../Pagination";
+import Pagination from "../../Pagination/Pagination";
 import AddCarTypeForm from "./AddCarTypeForm";
 import EditCarTypeForm from "./EditCarTypeForm";
 import DeleteCarTypeForm from "./DeleteCarTypeForm";

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Button, Col, Input } from "reactstrap";
 import SearchBox from "../SearchBox";
 import CarTable from "./CarTable";
-import Pagination from "../Pagination";
+import Pagination from "../../Pagination/Pagination";
 import axios from "axios";
 import AddCarForm from "./AddCarForm";
 import EditCarForm from "./EditCarForm";
