@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Container, Row, Button, Col, Input } from "reactstrap";
+import { Container, Row, Button, Col, Input, Label, FormGroup } from "reactstrap";
 import SearchBox from "../SearchBox";
 import CarTypeTable from "./CarTypeTable";
 import Pagination from "../../Pagination/Pagination";
@@ -22,6 +22,14 @@ const CarTypeManager = () => {
 						<option value="seat">Sort by Seat</option>
 						<option value="cost">Sort by Cost per day</option>
 					</Input>
+				</Col>
+				<Col>
+					<FormGroup check>
+						<Label check>
+							<Input type="checkbox" />{' '}
+							Check me out
+        		</Label>
+					</FormGroup>
 				</Col>
 			</Row>
 			<Row>

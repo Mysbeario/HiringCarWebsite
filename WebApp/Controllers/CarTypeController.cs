@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
@@ -32,21 +33,22 @@ namespace WebApp.Controllers {
         public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy, [FromQuery] string search = " ") {
             ISpecification<CarType> carTypeExpSpec =
                 new ExpressionSpecification<CarType> (e => EF.Functions.Like (e.Name, $"%{search.Trim()}%"));
+            var list = await carTypeRepository.Search (carTypeExpSpec);
+            Func<CarType, object> orderFunc = a => a.Id;
+
             switch (sortBy) {
                 case "name":
-                    carTypeExpSpec.orderExpression = a => a.Name;
+                    orderFunc = a => a.Name;
                     break;
                 case "seat":
-                    carTypeExpSpec.orderExpression = a => a.Seat;
+                    orderFunc = a => a.Seat;
                     break;
                 case "cost":
-                    carTypeExpSpec.orderExpression = a => a.Cost;
-                    break;
-                default:
-                    carTypeExpSpec.orderExpression = a => a.Id;
+                    orderFunc = a => a.Cost;
                     break;
             }
-            return await carTypeRepository.GetPaginated (page, size, carTypeExpSpec);
+
+            return list.OrderBy (orderFunc).Skip ((page - 1) * size).Take (size);
         }
 
         [HttpGet]
@@ -58,8 +60,8 @@ namespace WebApp.Controllers {
         public async Task Create ([FromForm] CarType carType) {
             await carTypeRepository.Create (new CarType {
                 Name = carType.Name,
-                Cost = carType.Cost,
-                Seat = carType.Seat
+                    Cost = carType.Cost,
+                    Seat = carType.Seat
             });
         }
 

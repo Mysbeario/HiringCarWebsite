@@ -41,32 +41,31 @@ namespace WebApp.Controllers {
 		public async Task<IEnumerable<CarDTO>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy, [FromQuery] string search = " ") {
 			ISpecification<Car> carExpSpec =
 				new ExpressionSpecification<Car> (e => EF.Functions.Like (e.NumberPlate, $"%{search.Trim()}%"));
+			var list = await carRepository.Search(carExpSpec);
+			Func<CarDTO, object> orderFunc = a => a.Id; 
 			switch (sortBy) {
 				case "numberPlate":
-					carExpSpec.orderExpression = a => a.NumberPlate;
+					orderFunc = a => a.NumberPlate;
 					break;
 				case "color":
-					carExpSpec.orderExpression = a => a.Color;
+					orderFunc = a => a.Color;
 					break;
-				case "carTypeId":
-					carExpSpec.orderExpression = a => a.CarTypeId;
-					break;
-				default:
-					carExpSpec.orderExpression = a => a.Id;
+				case "carTypeName":
+					orderFunc = a => a.CarTypeName;
 					break;
 			}
-			var carList = await carRepository.GetPaginated (page, size, carExpSpec);
+
 			var carTypeList = await carTypeRepository.GetAll ();
 			List<CarDTO> carDTOList = new List<CarDTO> ();
 
-			foreach (var car in carList) {
+			foreach (var car in list) {
 				var carType = carTypeList.Where (ct => ct.Id == car.CarTypeId).First ();
 				CarDTO carDTO = mapper.Map<Car, CarDTO> (car);
 				mapper.Map<CarType, CarDTO> (carType, carDTO);
 				carDTOList.Add (carDTO);
 			}
 
-			return carDTOList;
+			return carDTOList.OrderBy(orderFunc).Skip((page - 1) * size).Take(size);
 		}
 
 		[HttpGet]

@@ -41,7 +41,7 @@ const CarManager = () => {
 					<Input type="select" onChange={e => ctx.setSorting(e.target.value)}>
 						<option value="id" defaultValue>Sort by ID</option>
 						<option value="numberPlate">Sort by Number Plate</option>
-						<option value="seat">Sort by Type</option>
+						<option value="carTypeName">Sort by Type</option>
 						<option value="color">Sort by Color</option>
 					</Input>
 				</Col>
