@@ -7,6 +7,8 @@ namespace Core.DTO
 		public string Color { get; set; }
 		public string CarTypeId { get; set; }
 		public string CarTypeName { get; set; }
+		public decimal Cost { get; set; }
+		public byte Seat { get; set; }
 		public string ImgPath { get; set; }
 	}
 }

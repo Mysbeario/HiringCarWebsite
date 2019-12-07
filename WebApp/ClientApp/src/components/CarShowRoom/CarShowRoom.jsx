@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
 	Card, CardImg, CardText, CardBody,
-	CardTitle, CardSubtitle, Button, CardDeck
+	CardTitle, CardSubtitle, Button, CardDeck,
+	Container, Row, Col
 } from 'reactstrap';
 import Pagination from "../Pagination";
 
@@ -54,7 +55,9 @@ const CarShowRoom = () => {
 						<CardBody>
 							<CardTitle>{c.carTypeName}</CardTitle>
 							<CardSubtitle>{c.numberPlate}</CardSubtitle>
-							<CardText></CardText>
+							<CardText className="text-warning">
+								<strong>{c.cost} VND</strong>
+							</CardText>
 							<Button color="info">View More</Button>
 						</CardBody>
 					</Card>
@@ -64,10 +67,20 @@ const CarShowRoom = () => {
 	}
 
 	return (
-		<div>
-			{display()}
-			<Pagination totalPages={totalPages} currentPage={currentPage} onClick={setCurrentPage} />
-		</div>
+		<Container>
+			<Row>
+				<Col sm={3}>
+				</Col>
+				<Col>
+					<Row>
+						{display()}
+					</Row>
+					<Row>
+						<Pagination totalPages={totalPages} currentPage={currentPage} onClick={setCurrentPage} />
+					</Row>
+				</Col>
+			</Row>
+		</Container>
 	);
 };
 

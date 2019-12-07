@@ -60,9 +60,9 @@ namespace WebApp.Controllers {
 			List<CarDTO> carDTOList = new List<CarDTO> ();
 
 			foreach (var car in carList) {
-				var carTypeName = carTypeList.Where (ct => ct.Id == car.CarTypeId).First ().Name;
-				CarDTO carDTO = mapper.Map<CarDTO> (car);
-				carDTO.CarTypeName = carTypeName;
+				var carType = carTypeList.Where (ct => ct.Id == car.CarTypeId).First ();
+				CarDTO carDTO = mapper.Map<Car, CarDTO> (car);
+				mapper.Map<CarType, CarDTO> (carType, carDTO);
 				carDTOList.Add (carDTO);
 			}
 
