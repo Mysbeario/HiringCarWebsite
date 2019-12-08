@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Container, Row, Button, Col, Input, Label, FormGroup } from "reactstrap";
-import SearchBox from "../SearchBox";
+import { Container, Row, Button, Col, Input, Label, FormGroup, CustomInput } from "reactstrap";
+import DebounceInput from "../../DebounceInput/DebounceInput";
 import CarTypeTable from "./CarTypeTable";
 import Pagination from "../../Pagination/Pagination";
 import AddCarTypeForm from "./AddCarTypeForm";
@@ -14,21 +14,22 @@ const CarTypeManager = () => {
 	return (
 		<Container>
 			<Row>
-				<SearchBox onInput={ctx.setSearchString} />
 				<Col>
-					<Input type="select" onChange={e => ctx.setSorting(e.target.value)}>
-						<option value="id" defaultValue>Sort by ID</option>
-						<option value="name">Sort by Name</option>
-						<option value="seat">Sort by Seat</option>
-						<option value="cost">Sort by Cost per day</option>
-					</Input>
+					<DebounceInput onInput={ctx.setSearchString} placeholder="Search..." />
 				</Col>
 				<Col>
-					<FormGroup check>
-						<Label check>
-							<Input type="checkbox" />{' '}
-							Check me out
-        		</Label>
+					<FormGroup>
+						<CustomInput type="select" onChange={e => ctx.setSorting(e.target.value)}>
+							<option value="id" defaultValue>Sort by ID</option>
+							<option value="name">Sort by Name</option>
+							<option value="seat">Sort by Seat</option>
+							<option value="cost">Sort by Cost per day</option>
+						</CustomInput>
+					</FormGroup>
+				</Col>
+				<Col xs={1}>
+					<FormGroup>
+						<CustomInput type="switch" id="desc" name="desc" onChange={e => ctx.setOrder(e.target.checked)} label="desc" />
 					</FormGroup>
 				</Col>
 			</Row>

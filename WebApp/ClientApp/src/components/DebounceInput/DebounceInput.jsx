@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Col, Input } from "reactstrap";
+import { Input, FormGroup, Label } from "reactstrap";
 
-const SearchBox = ({ onInput }) => {
+const DebounceInput = ({ onInput, type = "text", placeholder = "", label = "", defaultValue = "" }) => {
 	const [searchString, setSearchString] = useState("");
 	const searchTimeout = useRef();
 
@@ -13,14 +13,16 @@ const SearchBox = ({ onInput }) => {
 	}, [searchString]);
 
 	return (
-		<Col>
-			<Input 
-				type="text"
-				placeholder="Search..."
+		<FormGroup>
+			{!!(label) && <Label>{label}</Label>}
+			<Input
+				type={type}
+				placeholder={placeholder}
 				onChange={e => setSearchString(e.target.value)}
+				defaultValue={defaultValue}
 			/>
-		</Col>
+		</FormGroup>
 	);
 };
 
-export default SearchBox;
+export default DebounceInput;

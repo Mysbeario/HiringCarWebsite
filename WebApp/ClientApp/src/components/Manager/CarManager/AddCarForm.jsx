@@ -1,5 +1,8 @@
 import React from "react";
-import { Modal, ModalHeader, ModalFooter, ModalBody, Label, Input, FormGroup, Form, Button } from "reactstrap";
+import { 
+	Modal, ModalHeader, ModalFooter, ModalBody,
+	Label, Input, FormGroup, Form, Button, CustomInput
+} from "reactstrap";
 import axios from "axios";
 
 const AddCarForm = ({ isOpen, toggle, onSubmit, carTypeList }) => {
@@ -34,7 +37,7 @@ const AddCarForm = ({ isOpen, toggle, onSubmit, carTypeList }) => {
 					</FormGroup>
 					<FormGroup>
 						<Label for="CarImage">Image</Label>
-						<Input type="file" name="CarImage" id="CarImage" />
+						<CustomInput type="file" id="CarImage" name="CarImage" />
 					</FormGroup>
 				</ModalBody>
 				<ModalFooter>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Row, Button, Col, Input } from "reactstrap";
-import SearchBox from "../SearchBox";
+import { Container, Row, Button, Col, Input, FormGroup, Label, CustomInput } from "reactstrap";
+import DebounceInput from "../../DebounceInput/DebounceInput";
 import CarTable from "./CarTable";
 import Pagination from "../../Pagination/Pagination";
 import axios from "axios";
@@ -36,14 +36,21 @@ const CarManager = () => {
 	return (
 		<Container>
 			<Row>
-				<SearchBox onInput={ctx.setSearchString} />
 				<Col>
-					<Input type="select" onChange={e => ctx.setSorting(e.target.value)}>
+					<DebounceInput onInput={ctx.setSearchString} placeholder="Search..." />
+				</Col>
+				<Col>
+					<CustomInput type="select" onChange={e => ctx.setSorting(e.target.value)}>
 						<option value="id" defaultValue>Sort by ID</option>
 						<option value="numberPlate">Sort by Number Plate</option>
 						<option value="carTypeName">Sort by Type</option>
 						<option value="color">Sort by Color</option>
-					</Input>
+					</CustomInput>
+				</Col>
+				<Col xs={1}>
+					<FormGroup>
+						<CustomInput type="switch" id="desc" name="desc" onChange={e => ctx.setOrder(e.target.checked)} label="desc" />
+					</FormGroup>
 				</Col>
 			</Row>
 			<Row>

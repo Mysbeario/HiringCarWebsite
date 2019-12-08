@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.DTO;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specification;
+using Core.ValueObjects;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -21,22 +23,18 @@ namespace WebApp.Controllers {
         }
 
         [HttpGet]
-        [Route ("~/api/pagination/cartype")]
-        public async Task<int> CountPages ([FromQuery] int size, [FromQuery] string search = " ") {
-            ISpecification<CarType> carTypeExpSpec =
-                new ExpressionSpecification<CarType> (e => EF.Functions.Like (e.Name, $"%{search.Trim()}%"));
-            return await carTypeRepository.CountPages (size, carTypeExpSpec);
-        }
-
-        [HttpGet]
         [Route ("~/api/pagination/cartype/{page}")]
-        public async Task<IEnumerable<CarType>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy, [FromQuery] string search = " ") {
+        public async Task<PageData<CarType>> GetPaginated (int page, [FromQuery] PaginateQuery query) {
             ISpecification<CarType> carTypeExpSpec =
-                new ExpressionSpecification<CarType> (e => EF.Functions.Like (e.Name, $"%{search.Trim()}%"));
-            var list = await carTypeRepository.Search (carTypeExpSpec);
+                new ExpressionSpecification<CarType> (e => EF.Functions.Like (e.Name, $"%{query.Search.Trim()}%"));
             Func<CarType, object> orderFunc = a => a.Id;
+            PageData<CarType> result = new PageData<CarType> ();
 
-            switch (sortBy) {
+            var list = await carTypeRepository.Search (carTypeExpSpec);
+
+            result.TotalPages = (int) Math.Ceiling (list.Count () / (double) query.PageSize);
+
+            switch (query.SortBy) {
                 case "name":
                     orderFunc = a => a.Name;
                     break;
@@ -48,7 +46,13 @@ namespace WebApp.Controllers {
                     break;
             }
 
-            return list.OrderBy (orderFunc).Skip ((page - 1) * size).Take (size);
+            if (!query.Desc) {
+                result.List = list.OrderBy (orderFunc).Skip ((page - 1) * query.PageSize).Take (query.PageSize);
+            } else {
+                result.List = list.OrderByDescending (orderFunc).Skip ((page - 1) * query.PageSize).Take (query.PageSize);
+            }
+
+            return result;
         }
 
         [HttpGet]

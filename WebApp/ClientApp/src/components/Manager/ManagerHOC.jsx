@@ -11,13 +11,15 @@ const withManager = (WrappedComponent, url, pageSize = 10) => {
 		const [currentPage, setCurrentPage] = useState(1);
 		const [sortBy, setSorting] = useState("id");
 		const [currentEditedItem, setCurrentEditedItem] = useState(null);
+		const [isDesc, setOrder] = useState(false);
 		const [isAddFormOpen, openAddForm] = useState(false);
 		const [isEditFormOpen, openEditForm] = useState(false);
 		const [isDeleteFormOpen, openDeleteForm] = useState(false);
 
 		const updateData = async () => {
-			const { data } = await axios.get(`${url}${currentPage}?size=${pageSize}&sortBy=${sortBy}${(searchString.trim() ? "&search=" + searchString : "")}`);
-			setEntityData(data);
+			const { data } = await axios.get(`${url}${currentPage}?PageSize=${pageSize}&SortBy=${sortBy}&Desc=${isDesc}${(searchString.trim() ? "&Search=" + searchString : "")}`);
+			setEntityData(data.list);
+			setTotalPages(data.totalPages);
 		};
 
 		const modifyData = (action, item) => {
@@ -37,11 +39,6 @@ const withManager = (WrappedComponent, url, pageSize = 10) => {
 		};
 
 		useEffect(() => {
-			(async () => {
-				const { data } = await axios.get(`${url}?size=${pageSize}${(searchString.trim() ? "&search=" + searchString : "")}`);
-				setTotalPages(data);
-			})();
-
 			if (currentPage === 1) {
 				updateData();
 			}
@@ -52,13 +49,14 @@ const withManager = (WrappedComponent, url, pageSize = 10) => {
 
 		useEffect(() => {
 			updateData();
-		}, [currentPage, sortBy]);
+		}, [currentPage, sortBy, isDesc]);
 
 		return (
 			<ManagerContext.Provider
 				value={{
 					setSearchString,
 					setSorting,
+					setOrder,
 					entityData,
 					modifyData,
 					isAddFormOpen,

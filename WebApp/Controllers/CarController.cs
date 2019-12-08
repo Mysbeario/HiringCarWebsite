@@ -8,6 +8,7 @@ using Core.DTO;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specification;
+using Core.ValueObjects;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -30,30 +31,24 @@ namespace WebApp.Controllers {
 
 		[HttpGet]
 		[Route ("~/api/pagination/car")]
-		public async Task<int> CountPages ([FromQuery] int size, [FromQuery] string search = " ") {
-			ISpecification<Car> carExpSpec =
-				new ExpressionSpecification<Car> (e => EF.Functions.Like (e.NumberPlate, $"%{search.Trim()}%"));
-			return await carRepository.CountPages (size, carExpSpec);
+		public async Task<int> CountPages ([FromQuery] CarQuery query) {
+			ISpecification<Car> numberPlateFilter =
+				new ExpressionSpecification<Car> (e => EF.Functions.Like (e.NumberPlate, $"%{query.Search.Trim()}%"));
+			ISpecification<Car> carTypeFilter = new ExpressionSpecification<Car> (e => query.CarTypeId == 0 ? true : e.CarTypeId == query.CarTypeId);
+			ISpecification<Car> carExpSpec = numberPlateFilter.And (carTypeFilter);
+			return await carRepository.CountPages (query.PageSize, carExpSpec);
 		}
 
-		[HttpGet]
-		[Route ("~/api/pagination/car/{page}")]
-		public async Task<IEnumerable<CarDTO>> GetPaginated (int page, [FromQuery] int size, [FromQuery] string sortBy, [FromQuery] string search = " ") {
-			ISpecification<Car> carExpSpec =
-				new ExpressionSpecification<Car> (e => EF.Functions.Like (e.NumberPlate, $"%{search.Trim()}%"));
-			var list = await carRepository.Search(carExpSpec);
-			Func<CarDTO, object> orderFunc = a => a.Id; 
-			switch (sortBy) {
-				case "numberPlate":
-					orderFunc = a => a.NumberPlate;
-					break;
-				case "color":
-					orderFunc = a => a.Color;
-					break;
-				case "carTypeName":
-					orderFunc = a => a.CarTypeName;
-					break;
-			}
+		private async Task<IEnumerable<CarDTO>> Filter (CarQuery query) {
+			ISpecification<Car> numberPlateFilter =
+				new ExpressionSpecification<Car> (e => EF.Functions.Like (e.NumberPlate, $"%{query.Search.Trim()}%"));
+			ISpecification<Car> carTypeFilter = new ExpressionSpecification<Car> (e => query.CarTypeId == 0 ? true : e.CarTypeId == query.CarTypeId);
+			ISpecification<CarDTO> seatFilter = new ExpressionSpecification<CarDTO> (c => query.Seat == 0 ? true : c.Seat == query.Seat);
+			ISpecification<CarDTO> priceFilter = new ExpressionSpecification<CarDTO> (e => query.MaxPrice == 0 ? true : e.Cost >= query.MinPrice && e.Cost <= query.MaxPrice);
+			ISpecification<CarDTO> carDTOExpSpec = seatFilter.And(priceFilter);
+			ISpecification<Car> carExpSpec = numberPlateFilter.And (carTypeFilter);
+
+			var list = await carRepository.Search (carExpSpec);
 
 			var carTypeList = await carTypeRepository.GetAll ();
 			List<CarDTO> carDTOList = new List<CarDTO> ();
@@ -65,7 +60,43 @@ namespace WebApp.Controllers {
 				carDTOList.Add (carDTO);
 			}
 
-			return carDTOList.OrderBy(orderFunc).Skip((page - 1) * size).Take(size);
+			return carDTOList.Where(c => carDTOExpSpec.IsSatisfiedBy(c)).ToList();
+		}
+
+		[HttpGet]
+		[Route ("~/api/pagination/car/{page}")]
+		public async Task<PageData<CarDTO>> GetPaginated (int page, [FromQuery] CarQuery query) {
+			PageData<CarDTO> result = new PageData<CarDTO>();
+			var carDTOList = await Filter(query);
+
+			Func<CarDTO, object> orderFunc = a => a.Id;
+			switch (query.SortBy) {
+				case "numberPlate":
+					orderFunc = a => a.NumberPlate;
+					break;
+				case "color":
+					orderFunc = a => a.Color;
+					break;
+				case "carTypeName":
+					orderFunc = a => a.CarTypeName;
+					break;
+				case "cost":
+					orderFunc = a => a.Cost;
+					break;
+				case "seat":
+					orderFunc = a => a.Seat;
+					break;
+			}
+
+			result.TotalPages = (int) Math.Ceiling (carDTOList.Count () / (double) query.PageSize);
+
+			if (!query.Desc) {
+				result.List = carDTOList.OrderBy (orderFunc).Skip ((page - 1) * query.PageSize).Take (query.PageSize);
+			} else {
+				result.List = carDTOList.OrderByDescending (orderFunc).Skip ((page - 1) * query.PageSize).Take (query.PageSize);
+			}
+
+			return result;
 		}
 
 		[HttpGet]
