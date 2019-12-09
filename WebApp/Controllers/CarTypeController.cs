@@ -61,12 +61,14 @@ namespace WebApp.Controllers {
         }
 
         [HttpPost]
-        public async Task Create ([FromForm] CarType carType) {
-            await carTypeRepository.Create (new CarType {
-                Name = carType.Name,
-                    Cost = carType.Cost,
-                    Seat = carType.Seat
-            });
+        public async Task<IActionResult> Create ([FromForm] CarType carType) {
+            if (ModelState.IsValid) {
+                await carTypeRepository.Create (carType);
+                return Ok ();
+            }
+            
+            var allErrors = ModelState.Values.SelectMany (v => v.Errors.Select (b => b.ErrorMessage));
+            return BadRequest (allErrors);
         }
 
         [HttpGet]
@@ -78,8 +80,14 @@ namespace WebApp.Controllers {
 
         [HttpPut]
         [Route ("{id}")]
-        public async Task Update ([FromForm] CarType carType) {
-            await carTypeRepository.Update (carType);
+        public async Task<IActionResult> Update ([FromForm] CarType carType) {
+            if (ModelState.IsValid) {
+                await carTypeRepository.Update (carType);
+                return Ok();
+            }
+
+            var allErrors = ModelState.Values.SelectMany (v => v.Errors.Select (b => b.ErrorMessage));
+            return BadRequest (allErrors);
         }
 
         [HttpDelete]

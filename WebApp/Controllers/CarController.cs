@@ -45,7 +45,7 @@ namespace WebApp.Controllers {
 			ISpecification<Car> carTypeFilter = new ExpressionSpecification<Car> (e => query.CarTypeId == 0 ? true : e.CarTypeId == query.CarTypeId);
 			ISpecification<CarDTO> seatFilter = new ExpressionSpecification<CarDTO> (c => query.Seat == 0 ? true : c.Seat == query.Seat);
 			ISpecification<CarDTO> priceFilter = new ExpressionSpecification<CarDTO> (e => query.MaxPrice == 0 ? true : e.Cost >= query.MinPrice && e.Cost <= query.MaxPrice);
-			ISpecification<CarDTO> carDTOExpSpec = seatFilter.And(priceFilter);
+			ISpecification<CarDTO> carDTOExpSpec = seatFilter.And (priceFilter);
 			ISpecification<Car> carExpSpec = numberPlateFilter.And (carTypeFilter);
 
 			var list = await carRepository.Search (carExpSpec);
@@ -60,14 +60,14 @@ namespace WebApp.Controllers {
 				carDTOList.Add (carDTO);
 			}
 
-			return carDTOList.Where(c => carDTOExpSpec.IsSatisfiedBy(c)).ToList();
+			return carDTOList.Where (c => carDTOExpSpec.IsSatisfiedBy (c)).ToList ();
 		}
 
 		[HttpGet]
 		[Route ("~/api/pagination/car/{page}")]
 		public async Task<PageData<CarDTO>> GetPaginated (int page, [FromQuery] CarQuery query) {
-			PageData<CarDTO> result = new PageData<CarDTO>();
-			var carDTOList = await Filter(query);
+			PageData<CarDTO> result = new PageData<CarDTO> ();
+			var carDTOList = await Filter (query);
 
 			Func<CarDTO, object> orderFunc = a => a.Id;
 			switch (query.SortBy) {
@@ -105,7 +105,7 @@ namespace WebApp.Controllers {
 		}
 
 		[HttpPost]
-		public async Task Create ([FromForm] Car car, [FromForm] IFormFile image) {
+		public async Task<IActionResult> Create ([FromForm] Car car, [FromForm] IFormFile image) {
 			byte[] file;
 			using (var memoryStream = new MemoryStream ()) {
 				await image.CopyToAsync (memoryStream);
@@ -115,8 +115,14 @@ namespace WebApp.Controllers {
 			var name = $"img_{car.NumberPlate.Replace(" ", "").Replace("-", "_")}";
 			car.ImgPath = name;
 
-			await carRepository.UploadImage (file, name);
-			await carRepository.Create (car);
+			if (ModelState.IsValid) {
+				await carRepository.UploadImage (file, name);
+				await carRepository.Create (car);
+				return Ok ();
+			}
+
+			var allErrors = ModelState.Values.SelectMany (v => v.Errors.Select (b => b.ErrorMessage));
+			return BadRequest (allErrors);
 		}
 
 		[HttpGet]
@@ -127,7 +133,7 @@ namespace WebApp.Controllers {
 
 		[HttpPut]
 		[Route ("{id}")]
-		public async Task Update ([FromForm] Car car, [FromForm] IFormFile image) {
+		public async Task<IActionResult> Update ([FromForm] Car car, [FromForm] IFormFile image) {
 			if (image != null) {
 				byte[] file;
 				using (var memoryStream = new MemoryStream ()) {
@@ -140,7 +146,14 @@ namespace WebApp.Controllers {
 
 				await carRepository.UploadImage (file, name);
 			}
-			await carRepository.Update (car);
+
+			if (ModelState.IsValid) {
+				await carRepository.Update (car);
+				return Ok();
+			}
+
+			var allErrors = ModelState.Values.SelectMany (v => v.Errors.Select (b => b.ErrorMessage));
+			return BadRequest (allErrors);
 		}
 
 		[HttpDelete]

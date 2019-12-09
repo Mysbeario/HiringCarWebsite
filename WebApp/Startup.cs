@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApp {
     public class Startup {
@@ -20,6 +21,8 @@ namespace WebApp {
         public void ConfigureServices (IServiceCollection services) {
             services.AddAutoMapper (typeof (MappingProfile));
             services.AddDbContext<ApplicationContext> ();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddControllersWithViews ();
 
@@ -44,6 +47,8 @@ namespace WebApp {
             app.UseSpaStaticFiles ();
 
             app.UseRouting ();
+
+            app.UseAuthentication();
 
             app.UseEndpoints (endpoints => {
                 endpoints.MapControllerRoute (

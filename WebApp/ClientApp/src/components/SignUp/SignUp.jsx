@@ -21,30 +21,19 @@ const SignUp = () => {
 		const data = new FormData(form);
 		const errors = [];
 
-		for (const k of data.values()) {
-			if (k.length === 0) {
-				errors.push("All fields must be filled!");
-				break;
-			}
-		}
-
-		if (!/^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/.test(data.get("Email"))) {
-			errors.push("Invalid email address!");
-		}
-
-		if (data.get("Password").length <= 8 || data.get("Password").length >= 32) {
-			errors.push("Password length must be 8 - 32 characters!");
-		}
-		else if (data.get("Password") !== data.get("ConfirmPassword")) {
-			errors.push("Password does not match!");
-		}
-
-		setValidationErrorList(errors);
-
 		if (!errors.length) {
 			(async () => {
-				await axios.post("/api/customer", data);
-				form.reset();
+				try {
+					await axios.post("/api/user/register", data);
+					form.reset();
+				}
+				catch (err) {
+					const errResponse = err.response.data.errors;
+					for (let e in err.response.data.errors) {
+						errors.push(errResponse[e][0]);
+					}
+					setValidationErrorList(errors);
+				}
 			})();
 		}
 	};
@@ -70,18 +59,6 @@ const SignUp = () => {
 				<FormGroup>
 					<Label htmlFor="ConfirmPassword">Confirm Password</Label>
 					<Input type="password" id="ConfirmPassword" name="ConfirmPassword" />
-				</FormGroup>
-				<FormGroup>
-					<Label htmlFor="FirstName">First Name</Label>
-					<Input type="text" id="FirstName" name="FirstName" />
-				</FormGroup>
-				<FormGroup>
-					<Label htmlFor="LastName">Last Name</Label>
-					<Input type="text" id="LastName" name="LastName" />
-				</FormGroup>
-				<FormGroup>
-					<Label htmlFor="PhoneNumber">Phone Number</Label>
-					<Input type="tel" id="PhoneNumber" name="PhoneNumber" />
 				</FormGroup>
 				<hr />
 				<FormGroup>
