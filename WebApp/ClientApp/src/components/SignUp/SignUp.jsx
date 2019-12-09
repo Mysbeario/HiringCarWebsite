@@ -13,7 +13,7 @@ const SignUpFormWrapper = styled.div`
 `;
 
 const SignUp = () => {
-	const [validationErrors, setValidationErrorList] = useState([]);
+	const [alertState, setAlertState] = useState({ status: "none", messages: [] });
 
 	const create = e => {
 		e.preventDefault();
@@ -21,28 +21,46 @@ const SignUp = () => {
 		const data = new FormData(form);
 		const errors = [];
 
+		for (let e of data.keys()) {
+			if (!data.get(e)) {
+				errors.push("All fields must be filled!");
+				break;
+			}
+		}
+
+		if (!/^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/.test(data.get("Email"))) {
+			errors.push("Invalid email address!");
+		}
+		if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,24}$/.test(data.get("Password"))) {
+			errors.push("Password must have at least 1 uppercase letter, 1 lowercase letter, 1 numberic character, 1 nonalphanumberic character and includes 6 - 24 characters");
+		}
+		else if (data.get("Password") !== data.get("ConfirmPassword")) {
+			errors.push("Passwords don't match");
+		}
+
 		if (!errors.length) {
 			(async () => {
+				setAlertState({ status: "primary", messages: ["Registering ..."] })
 				try {
 					await axios.post("/api/user/register", data);
 					form.reset();
+					setAlertState({ status: "success", messages: ["Successfully register new account!"] });
 				}
 				catch (err) {
-					const errResponse = err.response.data.errors;
-					for (let e in err.response.data.errors) {
-						errors.push(errResponse[e][0]);
-					}
-					setValidationErrorList(errors);
+					errors.push("Failed to register new account!");
+					setAlertState({ status: "danger", messages: errors });
 				}
 			})();
+		} else {
+			setAlertState({ status: "danger", messages: errors });
 		}
 	};
 
 	return (
 		<SignUpFormWrapper>
-			{!!validationErrors.length && <Alert color="danger">
+			{alertState.status !== "none" && <Alert color={alertState.status}>
 				<ul>
-					{validationErrors.map(err => <li>{err}</li>)}
+					{alertState.messages.map(msg => <li>{msg}</li>)}
 				</ul>
 			</Alert>}
 			<Form onSubmit={create}>
