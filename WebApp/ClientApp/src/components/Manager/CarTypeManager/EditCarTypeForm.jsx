@@ -1,20 +1,41 @@
 import React from "react";
-import { Modal, ModalHeader, ModalFooter, ModalBody, Label, Input, FormGroup, Form, Button } from "reactstrap";
+import { Alert, Modal, ModalHeader, ModalFooter, ModalBody, Label, Input, FormGroup, Form, Button } from "reactstrap";
 import axios from "axios";
 import CarType from "../../../types/CarType";
+import useAlertState from "../../../hooks/useAlertState";
+import validate from "./validation";
 
 const EditCarTypeForm = ({ isOpen, toggle, onSubmit, item = new CarType() }) => {
+	const [alertState, changeAlertState, resetAlertState] = useAlertState(2000);
+
 	const edit = async e => {
 		e.preventDefault();
 		const formData = new FormData(e.target);
-		await axios.put("api/cartype/" + item.id, formData);
-		toggle();
-		onSubmit();
+		const errors = validate(formData);
+
+		if (!errors.length) {
+			try {
+				await axios.put("api/cartype/" + item.id, formData);
+				toggle();
+				onSubmit();
+			}
+			catch (e) {
+				changeAlertState("danger", ["Failed to edit!"]);
+				resetAlertState();
+			}
+		} else {
+			changeAlertState("danger", errors);
+		}
 	};
 
 	return (
 		<Modal isOpen={isOpen} toggle={toggle}>
 			<ModalHeader toggle={toggle}>Edit Car Type</ModalHeader>
+			{alertState.status !== "none" && <Alert color={alertState.status}>
+				<ul>
+					{alertState.messages.map(msg => <li>{msg}</li>)}
+				</ul>
+			</Alert>}
 			<Form onSubmit={edit}>
 				<ModalBody>
 					<Input type="hidden" name="Id" id="Id" value={item.id} />

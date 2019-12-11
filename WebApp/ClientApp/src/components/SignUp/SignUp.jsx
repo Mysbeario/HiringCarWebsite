@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, FormGroup, Label, Input, Button, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
+import useAlertState from "../../hooks/useAlertState";
 
 const SignUpFormWrapper = styled.div`
 	box-sizing: border-box;
@@ -13,12 +14,9 @@ const SignUpFormWrapper = styled.div`
 `;
 
 const SignUp = () => {
-	const [alertState, setAlertState] = useState({ status: "none", messages: [] });
+	const [alertState, changeAlertState] = useAlertState(5000);
 
-	const create = e => {
-		e.preventDefault();
-		const form = e.target;
-		const data = new FormData(form);
+	const validate = data => {
 		const errors = [];
 
 		for (let e of data.keys()) {
@@ -38,21 +36,29 @@ const SignUp = () => {
 			errors.push("Passwords don't match");
 		}
 
+		return errors;
+	};
+
+	const create = e => {
+		e.preventDefault();
+		const form = e.target;
+		const data = new FormData(form);
+		const errors = validate(data);
+
 		if (!errors.length) {
 			(async () => {
-				setAlertState({ status: "primary", messages: ["Registering ..."] })
+				changeAlertState("primary", ["Registering ..."])
 				try {
 					await axios.post("/api/user/register", data);
 					form.reset();
-					setAlertState({ status: "success", messages: ["Successfully register new account!"] });
+					changeAlertState("success", ["Successfully register new account!"]);
 				}
 				catch (err) {
-					errors.push("Failed to register new account!");
-					setAlertState({ status: "danger", messages: errors });
+					changeAlertState("danger", ["Failed to register new account!"]);
 				}
 			})();
 		} else {
-			setAlertState({ status: "danger", messages: errors });
+			changeAlertState("danger", errors);
 		}
 	};
 

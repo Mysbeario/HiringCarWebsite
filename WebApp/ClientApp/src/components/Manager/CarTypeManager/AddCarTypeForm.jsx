@@ -1,20 +1,46 @@
 import React from "react";
-import { Modal, ModalHeader, ModalFooter, ModalBody, Label, Input, FormGroup, Form, Button } from "reactstrap";
+import { Alert, Modal, ModalHeader, ModalFooter, ModalBody, Label, Input, FormGroup, Form, Button } from "reactstrap";
 import axios from "axios";
+import useAlertState from "../../../hooks/useAlertState";
+import validate from "./validation";
 
 const AddCarTypeForm = ({ isOpen, toggle, onSubmit }) => {
+	const [alertState, changeAlertState, resetAlertState] = useAlertState(5000);
+
 	const create = async e => {
 		e.preventDefault();
 		const form = e.target;
 		const formData = new FormData(form);
-		await axios.post("api/cartype", formData);
-		form.reset();
-		onSubmit();
+		const errors = validate(formData);
+
+		if (!errors.length) {
+			try {
+				changeAlertState("primary", ["Adding ..."]);
+				await axios.post("api/cartype", formData);
+				changeAlertState("success",["New car type added!"]);
+				resetAlertState();
+				form.reset();
+				onSubmit();
+			}
+			catch (e) {
+				changeAlertState("danger", ["Failed to add!"]);
+				resetAlertState();
+			}
+		} else {
+			changeAlertState("danger", errors);
+			resetAlertState();
+		}
 	};
 
 	return (
 		<Modal isOpen={isOpen} toggle={toggle}>
 			<ModalHeader toggle={toggle}>Add Car Type</ModalHeader>
+			{alertState.status !== "none" &&
+				<Alert color={alertState.status}>
+					<ul>
+						{alertState.messages.map(msg => <li>{msg}</li>)}
+					</ul>
+				</Alert>}
 			<Form onSubmit={create}>
 				<ModalBody>
 					<FormGroup>
