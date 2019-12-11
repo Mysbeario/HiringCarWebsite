@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, FormGroup, Label, Input, Button, Alert } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { AccountAction } from "../../actions";
 import styled from "styled-components";
 import axios from "axios";
 import useAlertState from "../../hooks/useAlertState";
@@ -13,8 +15,23 @@ const SignUpFormWrapper = styled.div`
 	border-radius: 0.5em;
 `;
 
-const SignUp = () => {
+const SignUp = ({ history }) => {
 	const [alertState, changeAlertState] = useAlertState(5000);
+	const authStatus = useSelector(state => state.account.status);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		(async () => {
+			try {
+				await axios.get("/api/user/auth");
+				dispatch({ type: AccountAction.Auth });
+				history.push("/");
+			}
+			catch (e) {
+				dispatch({ type: AccountAction.Reject });
+			}
+		})();
+	}, []);
 
 	const validate = data => {
 		const errors = [];
@@ -52,6 +69,7 @@ const SignUp = () => {
 					await axios.post("/api/user/register", data);
 					form.reset();
 					changeAlertState("success", ["Successfully register new account!"]);
+					setTimeout(() => history.push("/"), 3000);
 				}
 				catch (err) {
 					changeAlertState("danger", ["Failed to register new account!"]);
@@ -63,33 +81,35 @@ const SignUp = () => {
 	};
 
 	return (
-		<SignUpFormWrapper>
-			{alertState.status !== "none" && <Alert color={alertState.status}>
-				<ul>
-					{alertState.messages.map(msg => <li>{msg}</li>)}
-				</ul>
-			</Alert>}
-			<Form onSubmit={create}>
-				<h1>Create New Account</h1>
-				<hr />
-				<FormGroup>
-					<Label htmlFor="Email">Email</Label>
-					<Input type="email" id="Email" name="Email" />
-				</FormGroup>
-				<FormGroup>
-					<Label htmlFor="Password">Password</Label>
-					<Input type="password" id="Password" name="Password" />
-				</FormGroup>
-				<FormGroup>
-					<Label htmlFor="ConfirmPassword">Confirm Password</Label>
-					<Input type="password" id="ConfirmPassword" name="ConfirmPassword" />
-				</FormGroup>
-				<hr />
-				<FormGroup>
-					<Button color="primary" type="submit">Sign Up</Button>
-				</FormGroup>
-			</Form>
-		</SignUpFormWrapper>
+		<>
+			{authStatus === "unauthenticated" && <SignUpFormWrapper>
+				{alertState.status !== "none" && <Alert color={alertState.status}>
+					<ul>
+						{alertState.messages.map(msg => <li>{msg}</li>)}
+					</ul>
+				</Alert>}
+				<Form onSubmit={create}>
+					<h1>Create New Account</h1>
+					<hr />
+					<FormGroup>
+						<Label htmlFor="Email">Email</Label>
+						<Input type="email" id="Email" name="Email" />
+					</FormGroup>
+					<FormGroup>
+						<Label htmlFor="Password">Password</Label>
+						<Input type="password" id="Password" name="Password" />
+					</FormGroup>
+					<FormGroup>
+						<Label htmlFor="ConfirmPassword">Confirm Password</Label>
+						<Input type="password" id="ConfirmPassword" name="ConfirmPassword" />
+					</FormGroup>
+					<hr />
+					<FormGroup>
+						<Button color="primary" type="submit">Sign Up</Button>
+					</FormGroup>
+				</Form>
+			</SignUpFormWrapper>}
+		</>
 	);
 };
 

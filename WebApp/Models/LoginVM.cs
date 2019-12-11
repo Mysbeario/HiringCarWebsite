@@ -1,4 +1,4 @@
-namespace WebApp.ViewModel
+namespace WebApp.Model
 {
     public class LoginVM
     {

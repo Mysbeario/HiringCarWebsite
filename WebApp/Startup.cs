@@ -1,13 +1,15 @@
 using AutoMapper;
 using Core.Mapping;
+using Core.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace WebApp {
     public class Startup {
@@ -21,8 +23,15 @@ namespace WebApp {
         public void ConfigureServices (IServiceCollection services) {
             services.AddAutoMapper (typeof (MappingProfile));
             services.AddDbContext<ApplicationContext> ();
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>();
+            services.AddIdentity<User, IdentityRole> ()
+                .AddEntityFrameworkStores<ApplicationContext> ();
+
+            services.ConfigureApplicationCookie (options => {
+                options.Events.OnRedirectToLogin = context => {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+            });
 
             services.AddControllersWithViews ();
 
@@ -48,7 +57,8 @@ namespace WebApp {
 
             app.UseRouting ();
 
-            app.UseAuthentication();
+            app.UseAuthentication ();
+            app.UseAuthorization ();
 
             app.UseEndpoints (endpoints => {
                 endpoints.MapControllerRoute (

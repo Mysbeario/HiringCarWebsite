@@ -54,7 +54,7 @@ namespace WebApp.Controllers {
 			List<CarDTO> carDTOList = new List<CarDTO> ();
 
 			foreach (var car in list) {
-				var carType = carTypeList.Where (ct => ct.Id == car.CarTypeId).First ();
+				var carType = await carTypeRepository.GetById(car.CarTypeId);
 				CarDTO carDTO = mapper.Map<Car, CarDTO> (car);
 				mapper.Map<CarType, CarDTO> (carType, carDTO);
 				carDTOList.Add (carDTO);
@@ -127,8 +127,12 @@ namespace WebApp.Controllers {
 
 		[HttpGet]
 		[Route ("{id}")]
-		public async Task<Car> GetByID (int id) {
-			return await carRepository.GetById (id);
+		public async Task<CarDTO> GetByID (int id) {
+			var car = await carRepository.GetById (id);
+			var carType = await carTypeRepository.GetById (car.CarTypeId);
+			CarDTO carDTO = mapper.Map<Car, CarDTO> (car);
+			mapper.Map<CarType, CarDTO> (carType, carDTO);
+			return carDTO;
 		}
 
 		[HttpPut]
@@ -149,7 +153,7 @@ namespace WebApp.Controllers {
 
 			if (ModelState.IsValid) {
 				await carRepository.Update (car);
-				return Ok();
+				return Ok ();
 			}
 
 			var allErrors = ModelState.Values.SelectMany (v => v.Errors.Select (b => b.ErrorMessage));
