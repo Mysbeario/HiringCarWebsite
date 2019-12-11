@@ -10,6 +10,7 @@ using Core.ValueObjects;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Controllers {
@@ -61,6 +62,7 @@ namespace WebApp.Controllers {
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create ([FromForm] CarType carType) {
             if (ModelState.IsValid) {
                 await carTypeRepository.Create (carType);
@@ -80,6 +82,7 @@ namespace WebApp.Controllers {
 
         [HttpPut]
         [Route ("{id}")]
+        [Authorize]
         public async Task<IActionResult> Update ([FromForm] CarType carType) {
             if (ModelState.IsValid) {
                 await carTypeRepository.Update (carType);
@@ -92,6 +95,7 @@ namespace WebApp.Controllers {
 
         [HttpDelete]
         [Route ("{id}")]
+        [Authorize]
         public async Task Delete (int id) {
             await carTypeRepository.Delete (id);
         }

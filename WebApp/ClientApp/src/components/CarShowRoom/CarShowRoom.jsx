@@ -5,6 +5,7 @@ import {
 	CardTitle, CardSubtitle, Button, CardDeck,
 	Container, Row, Col, Form, FormGroup, Input, Label, CustomInput
 } from 'reactstrap';
+import { Link } from "react-router-dom";
 import Pagination from "../Pagination";
 import DebounceInput from "../DebounceInput";
 
@@ -82,7 +83,7 @@ const CarShowRoom = () => {
 							<CardText style={{ color: "orange" }}>
 								<h4>{c.cost} VND</h4>
 							</CardText>
-							<Button color="info">View More</Button>
+							<Link to={`/car/${c.id}`}><Button color="info">View More</Button></Link>
 						</CardBody>
 					</Card>
 				)}

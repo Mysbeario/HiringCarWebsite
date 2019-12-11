@@ -6,7 +6,7 @@ namespace Core.Mapping {
     public class MappingProfile : Profile {
         public MappingProfile () {
             CreateMap<Car, CarDTO>();
-            CreateMap<CarType, CarDTO>().ForMember(d => d.CarTypeName, o => o.MapFrom(s => s.Name));
+            CreateMap<CarType, CarDTO>().ForMember(d => d.CarTypeName, o => o.MapFrom(s => s.Name)).ForMember(d => d.Id, o => o.Ignore());
         }
     }
 }
