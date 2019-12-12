@@ -11,11 +11,11 @@ const datesDifferenceCalculate = (from, to) => {
 };
 
 const BookingForm = ({ car }) => {
-	const [startDay, setFromDate] = useState("");
-	const [toDate, setEndDate] = useState("");
+	const dateFilter = useSelector(state => state.dateFilter);
+	const [startDay, setFromDate] = useState(dateFilter.startDay);
+	const [toDate, setEndDate] = useState(dateFilter.endDay);
 	const [days, setDays] = useState(0);
 	const [bookingData, setBookingData] = useState(new FormData());
-	const dateFilter = useSelector(state => state.dateFilter);
 
 	useEffect(() => {
 		const diff = datesDifferenceCalculate(new Date(startDay), new Date(toDate)) || 0;

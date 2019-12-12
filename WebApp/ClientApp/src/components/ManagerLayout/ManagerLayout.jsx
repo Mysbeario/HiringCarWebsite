@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Col, Row, Nav, NavItem, NavLink } from "reactstrap";
 import { Link, Route, useRouteMatch, Switch } from "react-router-dom";
-import { CarManager, CarTypeManager } from "../Manager";
+import { CarManager, CarTypeManager, BookingManager } from "../Manager";
 
 const ManagerLayout = () => {
 	const { path, url } = useRouteMatch();
@@ -9,7 +9,7 @@ const ManagerLayout = () => {
 	return (
 		<Container>
 			<Row>
-				<Col xs="2">
+				<Col xs={2}>
 					<h4>Category</h4>
 					<hr />
 					<Nav vertical>
@@ -19,6 +19,9 @@ const ManagerLayout = () => {
 						<NavItem>
 							<NavLink tag={Link} to={`${url}/car`}>Car</NavLink>
 						</NavItem>
+						<NavItem>
+							<NavLink tag={Link} to={`${url}/booking`}>Booking</NavLink>
+						</NavItem>
 					</Nav>
 				</Col>
 				<Col>
@@ -26,6 +29,7 @@ const ManagerLayout = () => {
 						<Route exact path={path}>Welcome</Route>
 						<Route path={`${path}/car-type`} component={CarTypeManager} />
 						<Route path={`${path}/car`} component={CarManager} />
+						<Route path={`${path}/booking`} component={BookingManager} />
 					</Switch>
 				</Col>
 			</Row>
