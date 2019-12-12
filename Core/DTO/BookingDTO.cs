@@ -7,6 +7,8 @@ namespace Core.DTO {
 		public string DropOffLocation { get; set; }
 		public string NumberPlate { get; set; }
 		public string UserEmail { get; set; }
+		public int CarId { get; set; }
+		public string UserId { get; set; }
 		public decimal TotalCost { get; set; }
 		public string Status { get; set; }
 	}

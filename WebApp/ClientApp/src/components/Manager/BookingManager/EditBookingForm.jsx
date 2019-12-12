@@ -24,11 +24,12 @@ const EditBookingForm = ({ isOpen, toggle, onSubmit, item = new Booking() }) => 
 	const edit = async e => {
 		e.preventDefault();
 		const formData = new FormData(e.target);
+		console.log(item);
 		const errors = validate(formData);
 
 		if (!errors.length) {
 			try {
-				await axios.put("api/cartype/" + item.id, formData);
+				await axios.put("api/booking/" + item.id, formData);
 				toggle();
 				onSubmit();
 			}
@@ -57,7 +58,7 @@ const EditBookingForm = ({ isOpen, toggle, onSubmit, item = new Booking() }) => 
 					<Input type="hidden" name="Status" id="Status" value={item.status} />
 					<FormGroup>
 						<Label htmlFor="PickUpDate">Pick-up Date</Label>
-						<Input type="date" name="PickUpDate" id="NPickUpDateame" defaultValue={item.pickUpDate} min={nowToString()} />
+						<Input type="date" name="PickUpDate" id="PickUpDate" defaultValue={item.pickUpDate} min={nowToString()} />
 					</FormGroup>
 					<FormGroup>
 						<Label htmlFor="DropOffDate">Drop-off Date</Label>

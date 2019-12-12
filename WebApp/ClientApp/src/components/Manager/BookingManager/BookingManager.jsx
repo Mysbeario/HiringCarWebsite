@@ -5,6 +5,7 @@ import Pagination from "../../Pagination/Pagination";
 import { ManagerContext } from "../ManagerHOC";
 import BookingTable from "./BookingTable";
 import EditBookingForm from "./EditBookingForm";
+import CancelBookingForm from "./CancelBookingForm";
 
 const BookingManager = () => {
 	const ctx = useContext(ManagerContext);
@@ -39,6 +40,12 @@ const BookingManager = () => {
 			<EditBookingForm
 				isOpen={ctx.isEditFormOpen}
 				toggle={() => ctx.openEditForm(!ctx.isEditFormOpen)}
+				onSubmit={ctx.updateData}
+				item={ctx.findItem(ctx.currentEditedItem)}
+			/>
+			<CancelBookingForm
+				isOpen={ctx.isDeleteFormOpen}
+				toggle={() => ctx.openDeleteForm(!ctx.isDeleteFormOpen)}
 				onSubmit={ctx.updateData}
 				item={ctx.findItem(ctx.currentEditedItem)}
 			/>

@@ -18,6 +18,7 @@ using WebApp.Model;
 
 namespace WebApp.Controllers {
     [ApiController]
+    [Route ("/api/booking")]
     public class BookingController : ControllerBase {
         private GenericRepository<Booking> bookingRepository;
         private GenericRepository<CarType> carTypeRepository;
@@ -34,7 +35,6 @@ namespace WebApp.Controllers {
         }
 
         [HttpPost]
-        [Route ("/api/booking")]
         [Authorize]
         public async Task<ActionResult> Create ([FromForm] BookingVM bookingInfo) {
             if (ModelState.IsValid) {
@@ -108,6 +108,21 @@ namespace WebApp.Controllers {
         }
 
         [HttpPut]
+        [Route ("~/api/status/booking/{id}")]
+        [Authorize]
+        public async Task<IActionResult> Cancel (int id, [FromQuery] String Action) {
+            var booking = await bookingRepository.GetById (id);
+            if (Action == "cancel") {
+                booking.Status = "Cancel";
+            } else if (Action == "paid") {
+                booking.Status = "Paid";
+            }
+
+            await bookingRepository.Update (booking);
+            return Ok ();
+        }
+
+        [HttpPut]
         [Route ("{id}")]
         [Authorize]
         public async Task<IActionResult> Update ([FromForm] BookingVM bookingInfo) {
@@ -119,14 +134,14 @@ namespace WebApp.Controllers {
 
                 Booking booking = new Booking {
                     Id = bookingInfo.Id,
-                        CarId = bookingInfo.CarId,
-                        UserId = bookingInfo.UserId,
-                        PickUpDate = startDay,
-                        DropOffDate = endDay,
-                        PickUpLocation = bookingInfo.PickUpLocation,
-                        DropOffLocation = bookingInfo.DropOffLocation,
-                        TotalCost = cost,
-                        Status = bookingInfo.Status
+                    CarId = bookingInfo.CarId,
+                    UserId = bookingInfo.UserId,
+                    PickUpDate = startDay,
+                    DropOffDate = endDay,
+                    PickUpLocation = bookingInfo.PickUpLocation,
+                    DropOffLocation = bookingInfo.DropOffLocation,
+                    TotalCost = cost,
+                    Status = bookingInfo.Status
                 };
 
                 await bookingRepository.Update (booking);

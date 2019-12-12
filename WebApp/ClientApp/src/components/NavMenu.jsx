@@ -22,7 +22,7 @@ export const NavMenu = () => {
     <header>
       <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
         <Container>
-          <NavbarBrand tag={Link} to="/">WebApp</NavbarBrand>
+          <NavbarBrand tag={Link} to="/">Hring Car</NavbarBrand>
           <NavbarToggler onClick={toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!isCollapsed} navbar>
             <ul className="navbar-nav flex-grow">
