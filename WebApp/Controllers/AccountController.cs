@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using Core.ValueObjects;
+using Core.Interfaces;
+using Core.Specification;
 using Core.Entities;
+using Core.DTO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Model;
+using System;
 
 namespace WebApp.Controllers {
     [ApiController]
@@ -81,6 +86,40 @@ namespace WebApp.Controllers {
             }
 
             return BadRequest ();
+        }
+
+        [HttpGet]
+        [Route ("~/api/pagination/user/{page}")]
+        public ActionResult<PageData<User>> GetPaginated(int page, [FromQuery] PaginateQuery query ) {
+            PageData<User> result = new PageData<User> ();
+            Func<User, object> orderFunc = a => a.Id;
+
+            var list = userManager.Users.ToList();
+
+            result.TotalPages = (int) Math.Ceiling (list.Count () / (double) query.PageSize);
+
+            switch (query.SortBy) {
+                case "email":
+                    orderFunc = a => a.Email;
+                    break;
+            }
+
+            if (!query.Desc) {
+                result.List = list.OrderBy (orderFunc).Skip ((page - 1) * query.PageSize).Take (query.PageSize);
+            } else {
+                result.List = list.OrderByDescending (orderFunc).Skip ((page - 1) * query.PageSize).Take (query.PageSize);
+            }
+
+            return result;
+        }
+
+        [HttpDelete]
+        [Route("/api/user/{id}")]
+        [Authorize]
+        public async Task<ActionResult> DeleteUser(string id) {
+            var user = await userManager.FindByIdAsync(id);
+            await userManager.DeleteAsync(user);
+            return Ok();
         }
     }
 }
