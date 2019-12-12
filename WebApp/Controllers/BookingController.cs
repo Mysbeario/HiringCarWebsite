@@ -43,9 +43,11 @@ namespace WebApp.Controllers {
                 ISpecification<Booking> dateFilter = new ExpressionSpecification<Booking> (e =>
                     (DateTime.Compare (startDay, e.PickUpDate) <= 0 && DateTime.Compare (endDay, e.PickUpDate) >= 0) ||
                     (DateTime.Compare (startDay, e.DropOffDate) <= 0 && DateTime.Compare (endDay, e.DropOffDate) >= 0));
+                ISpecification<Booking> statusFilter = new ExpressionSpecification<Booking> (e => e.UserId == Request.Cookies["User.ID"] && e.Status == "Pending");
                 var bookingList = await bookingRepository.Search (dateFilter);
+                var pendingBookingList = await bookingRepository.Search (statusFilter);
 
-                if (bookingList.Where (e => e.CarId == bookingInfo.CarId).Count () == 0) {
+                if (bookingList.Where (e => e.CarId == bookingInfo.CarId).Count () == 0 && pendingBookingList.Count() == 0) {
                     var totalDays = (endDay - startDay).TotalDays + 1;
                     var cost = (await carTypeRepository.GetById ((await carRepository.GetById (bookingInfo.CarId)).CarTypeId)).Cost;
 
@@ -69,12 +71,16 @@ namespace WebApp.Controllers {
 
         [HttpGet]
         [Route ("~/api/pagination/booking/{page}")]
-        public async Task<PageData<BookingDTO>> GetPaginated (int page, [FromQuery] PaginateQuery query) {
+        public async Task<PageData<BookingDTO>> GetPaginated (int page, [FromQuery] PaginateQuery query, [FromQuery] bool ByUser) {
             Func<BookingDTO, object> orderFunc = a => a.Id;
             PageData<BookingDTO> result = new PageData<BookingDTO> ();
 
             List<BookingDTO> bookingDTOList = new List<BookingDTO> ();
             var bookingList = await bookingRepository.GetAll ();
+
+            if (ByUser) {
+                bookingList = bookingList.Where(e => e.UserId == Request.Cookies["User.ID"]);
+            }
 
             foreach (var booking in bookingList) {
                 var numberPlate = (await carRepository.GetById (booking.CarId)).NumberPlate;
@@ -114,8 +120,8 @@ namespace WebApp.Controllers {
             var booking = await bookingRepository.GetById (id);
             if (Action == "cancel") {
                 booking.Status = "Cancel";
-            } else if (Action == "paid") {
-                booking.Status = "Paid";
+            } else if (Action == "finish") {
+                booking.Status = "Finish";
             }
 
             await bookingRepository.Update (booking);

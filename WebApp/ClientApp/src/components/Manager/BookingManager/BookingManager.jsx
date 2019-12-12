@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Container, Row, Col, FormGroup, CustomInput } from "reactstrap";
 import DebounceInput from "../../DebounceInput/DebounceInput";
 import Pagination from "../../Pagination/Pagination";
@@ -6,9 +6,19 @@ import { ManagerContext } from "../ManagerHOC";
 import BookingTable from "./BookingTable";
 import EditBookingForm from "./EditBookingForm";
 import CancelBookingForm from "./CancelBookingForm";
+import CheckoutBookingForm from "./CheckoutBookingForm";
 
 const BookingManager = () => {
+	const [isViewModalOpen, openViewModal] = useState(false);
 	const ctx = useContext(ManagerContext);
+
+	const modifyData = (action, id) => {
+		ctx.modifyData(action, id);
+
+		if (action === "view") {
+			openViewModal(true);
+		}
+	}
 
 	return (
 		<Container>
@@ -32,7 +42,7 @@ const BookingManager = () => {
 				</Col>
 			</Row>
 			<Row>
-				<BookingTable data={ctx.entityData} onAction={ctx.modifyData} />
+				<BookingTable data={ctx.entityData} onAction={modifyData} />
 			</Row>
 			<Row>
 				<Pagination totalPages={ctx.totalPages} currentPage={ctx.currentPage} onClick={ctx.setCurrentPage} />
@@ -47,6 +57,11 @@ const BookingManager = () => {
 				isOpen={ctx.isDeleteFormOpen}
 				toggle={() => ctx.openDeleteForm(!ctx.isDeleteFormOpen)}
 				onSubmit={ctx.updateData}
+				item={ctx.findItem(ctx.currentEditedItem)}
+			/>
+			<CheckoutBookingForm
+				isOpen={isViewModalOpen}
+				toggle={() => openViewModal(!isViewModalOpen)}
 				item={ctx.findItem(ctx.currentEditedItem)}
 			/>
 		</Container>

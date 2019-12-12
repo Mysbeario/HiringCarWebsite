@@ -32,7 +32,7 @@ const BookingTable = ({ data, onAction }) => {
 					<td>
 						<Button color="info" size="sm" onClick={() => onAction("edit", item.id)}>Edit</Button>&nbsp;
 						<Button color="danger" size="sm" onClick={() => onAction("delete", item.id)}>Cancel</Button>&nbsp;
-						<Button color="success" size="sm" onClick={() => onAction("delete", item.id)}>Checkout</Button>
+						<Button color="success" size="sm" onClick={() => onAction("view", item.id)}>Checkout</Button>
 					</td>
 				</tr>)}
 			</tbody>

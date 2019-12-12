@@ -10,6 +10,7 @@ import './custom.css'
 import { SignUp, LogIn } from './components/Account';
 import CarShowRoom from './components/CarShowRoom';
 import CarInfo from './components/CarInfo';
+import BookingHistory from './components/BookingHistory';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const App = () => {
       <Route path='/manager' component={ManagerLayout} />
       <Route exact path='/car' component={CarShowRoom} />
       <Route path="/car/:id" component={CarInfo} />
+      <Route path="/booking-history" component={BookingHistory} />
     </Layout>
   );
 }

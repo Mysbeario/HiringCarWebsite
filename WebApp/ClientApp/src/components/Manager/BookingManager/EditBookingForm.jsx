@@ -1,4 +1,5 @@
 import React from "react";
+import {useHistory} from "react-router-dom";
 import { Alert, Modal, ModalHeader, ModalFooter, ModalBody, Label, Input, FormGroup, Form, Button } from "reactstrap";
 import axios from "axios";
 import useAlertState from "../../../hooks/useAlertState";
@@ -20,6 +21,7 @@ const validate = data => {
 
 const EditBookingForm = ({ isOpen, toggle, onSubmit, item = new Booking() }) => {
 	const [alertState, changeAlertState, resetAlertState] = useAlertState(2000);
+	const history = useHistory();
 
 	const edit = async e => {
 		e.preventDefault();
@@ -35,6 +37,7 @@ const EditBookingForm = ({ isOpen, toggle, onSubmit, item = new Booking() }) => 
 			}
 			catch (e) {
 				changeAlertState("danger", ["Failed to edit!"]);
+				history.push("/login");
 				resetAlertState();
 			}
 		} else {
