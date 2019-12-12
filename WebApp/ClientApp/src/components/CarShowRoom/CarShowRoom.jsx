@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import {
 	Card, CardImg, CardText, CardBody,
@@ -21,6 +22,7 @@ const CarShowRoom = () => {
 	const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
 	const [seatFilter, setSeatFilter] = useState(0);
 	const [isDesc, setOrder] = useState(false);
+	const dateFilter = useSelector(state => state.dateFilter);
 
 	const updateData = async () => {
 		const { data } = await axios.get(
@@ -28,6 +30,7 @@ const CarShowRoom = () => {
 			+ (seatFilter ? `&Seat=${seatFilter}` : "")
 			+ (priceRange.min ? `&MinPrice=${priceRange.min}` : "")
 			+ (priceRange.max ? `&MaxPrice=${priceRange.max}` : "")
+			+ `&PickUpDate=${dateFilter.startDay}` + `&DropOffDate=${dateFilter.endDay}`
 		);
 		setCarList(data.list);
 		setTotalPages(data.totalPages);

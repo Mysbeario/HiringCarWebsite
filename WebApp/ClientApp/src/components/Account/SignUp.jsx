@@ -69,10 +69,12 @@ const SignUp = ({ history }) => {
 					await axios.post("/api/user/register", data);
 					form.reset();
 					changeAlertState("success", ["Successfully register new account!"]);
-					setTimeout(() => history.push("/"), 3000);
+					dispatch({ type: AccountAction.Auth });
+					setTimeout(() => history.push("/"), 2500);
 				}
 				catch (err) {
 					changeAlertState("danger", ["Failed to register new account!"]);
+					dispatch({ type: AccountAction.Reject });
 				}
 			})();
 		} else {

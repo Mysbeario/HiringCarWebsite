@@ -1,9 +1,7 @@
 using System;
 
-namespace Core.Entities
-{
-    public class Booking: BaseEntity
-    {
+namespace Core.Entities {
+    public class Booking : BaseEntity {
         public int CarId { get; set; }
         public string UserId { get; set; }
         public DateTime PickUpDate { get; set; }
@@ -11,6 +9,7 @@ namespace Core.Entities
         public string PickUpLocation { get; set; }
         public string DropOffLocation { get; set; }
         public decimal TotalCost { get; set; }
+        public string Status { get; set; }
 
         public virtual Car Car { get; set; }
         public virtual User User { get; set; }

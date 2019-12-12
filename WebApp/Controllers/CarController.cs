@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,11 +22,13 @@ namespace WebApp.Controllers {
 	public class CarController : ControllerBase {
 		private CarRepository carRepository;
 		private GenericRepository<CarType> carTypeRepository;
+		private GenericRepository<Booking> bookingRepository;
 		private readonly IMapper mapper;
 
 		public CarController (IMapper mapper) {
 			this.carRepository = new CarRepository (new ApplicationContext ());
 			this.carTypeRepository = new GenericRepository<CarType> (new ApplicationContext ());
+			this.bookingRepository = new GenericRepository<Booking> (new ApplicationContext ());
 			this.mapper = mapper;
 		}
 
@@ -45,19 +48,27 @@ namespace WebApp.Controllers {
 			ISpecification<Car> carTypeFilter = new ExpressionSpecification<Car> (e => query.CarTypeId == 0 ? true : e.CarTypeId == query.CarTypeId);
 			ISpecification<CarDTO> seatFilter = new ExpressionSpecification<CarDTO> (c => query.Seat == 0 ? true : c.Seat == query.Seat);
 			ISpecification<CarDTO> priceFilter = new ExpressionSpecification<CarDTO> (e => query.MaxPrice == 0 ? true : e.Cost >= query.MinPrice && e.Cost <= query.MaxPrice);
+			var startDay = DateTime.ParseExact (query.PickUpDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+			var endDay = DateTime.ParseExact (query.DropOffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+			ISpecification<Booking> dateFilter = new ExpressionSpecification<Booking> (e =>
+				(DateTime.Compare (startDay, e.PickUpDate) <= 0 && DateTime.Compare (endDay, e.PickUpDate) >= 0) ||
+				(DateTime.Compare (startDay, e.DropOffDate) <= 0 && DateTime.Compare (endDay, e.DropOffDate) >= 0));
 			ISpecification<CarDTO> carDTOExpSpec = seatFilter.And (priceFilter);
 			ISpecification<Car> carExpSpec = numberPlateFilter.And (carTypeFilter);
 
 			var list = await carRepository.Search (carExpSpec);
 
 			var carTypeList = await carTypeRepository.GetAll ();
+			var bookingList = await bookingRepository.Search (dateFilter);
 			List<CarDTO> carDTOList = new List<CarDTO> ();
 
 			foreach (var car in list) {
-				var carType = await carTypeRepository.GetById(car.CarTypeId);
-				CarDTO carDTO = mapper.Map<Car, CarDTO> (car);
-				mapper.Map<CarType, CarDTO> (carType, carDTO);
-				carDTOList.Add (carDTO);
+				if (bookingList.Where (e => e.CarId == car.Id).Count () == 0) {
+					var carType = await carTypeRepository.GetById (car.CarTypeId);
+					CarDTO carDTO = mapper.Map<Car, CarDTO> (car);
+					mapper.Map<CarType, CarDTO> (carType, carDTO);
+					carDTOList.Add (carDTO);
+				}
 			}
 
 			return carDTOList.Where (c => carDTOExpSpec.IsSatisfiedBy (c)).ToList ();

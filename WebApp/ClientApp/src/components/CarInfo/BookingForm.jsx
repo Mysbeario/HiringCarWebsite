@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Form, Input, FormGroup, Row, Col, Label, Button } from "reactstrap";
 import ConfirmModal from "./ConfirmModal";
 import { nowToString } from "../../utilities";
@@ -14,6 +15,7 @@ const BookingForm = ({ car }) => {
 	const [toDate, setEndDate] = useState("");
 	const [days, setDays] = useState(0);
 	const [bookingData, setBookingData] = useState(new FormData());
+	const dateFilter = useSelector(state => state.dateFilter);
 
 	useEffect(() => {
 		const diff = datesDifferenceCalculate(new Date(startDay), new Date(toDate)) || 0;
@@ -36,13 +38,13 @@ const BookingForm = ({ car }) => {
 					<Col>
 						<FormGroup>
 							<Label htmlFor="PickUpDate">Pick-up Date</Label>
-							<Input type="date" id="PickUpDate" name="PickUpDate" min={nowToString()} onChange={e => setFromDate(e.target.value)} />
+							<Input type="date" defaultValue={dateFilter.startDay} id="PickUpDate" name="PickUpDate" min={nowToString()} onChange={e => setFromDate(e.target.value)} />
 						</FormGroup>
 					</Col>
 					<Col>
 						<FormGroup>
 							<Label htmlFor="DropOffDate">Drop-off Date</Label>
-							<Input type="date" id="DropOffDate" name="DropOffDate" onChange={e => setEndDate(e.target.value)} />
+							<Input type="date" defaultValue={dateFilter.endDay} id="DropOffDate" name="DropOffDate" onChange={e => setEndDate(e.target.value)} />
 						</FormGroup>
 					</Col>
 				</Row>

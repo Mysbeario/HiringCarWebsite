@@ -3,6 +3,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Interfaces;
+using Core.Specification;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -29,21 +31,29 @@ namespace WebApp.Controllers {
             if (ModelState.IsValid) {
                 var startDay = DateTime.ParseExact (bookingInfo.PickUpDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 var endDay = DateTime.ParseExact (bookingInfo.DropOffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                var totalDays = (endDay - startDay).TotalDays + 1;
-                var cost = (await carTypeRepository.GetById ((await carRepository.GetById (bookingInfo.CarId)).CarTypeId)).Cost;
+                ISpecification<Booking> dateFilter = new ExpressionSpecification<Booking> (e =>
+                    (DateTime.Compare (startDay, e.PickUpDate) <= 0 && DateTime.Compare (endDay, e.PickUpDate) >= 0) ||
+                    (DateTime.Compare (startDay, e.DropOffDate) <= 0 && DateTime.Compare (endDay, e.DropOffDate) >= 0));
+                var bookingList = await bookingRepository.Search (dateFilter);
 
-                Booking booking = new Booking {
-                    CarId = bookingInfo.CarId,
-                    UserId = Request.Cookies["User.ID"],
-                    PickUpLocation = bookingInfo.PickUpLocation,
-                    DropOffLocation = bookingInfo.DropOffLocation,
-                    PickUpDate = startDay,
-                    DropOffDate = endDay,
-                    TotalCost = (decimal) totalDays * cost
-                };
+                if (bookingList.Where (e => e.CarId == bookingInfo.CarId).Count () == 0) {
+                    var totalDays = (endDay - startDay).TotalDays + 1;
+                    var cost = (await carTypeRepository.GetById ((await carRepository.GetById (bookingInfo.CarId)).CarTypeId)).Cost;
 
-                await bookingRepository.Create(booking);
-                return Ok();
+                    Booking booking = new Booking {
+                        CarId = bookingInfo.CarId,
+                        UserId = Request.Cookies["User.ID"],
+                        PickUpLocation = bookingInfo.PickUpLocation,
+                        DropOffLocation = bookingInfo.DropOffLocation,
+                        PickUpDate = startDay,
+                        DropOffDate = endDay,
+                        TotalCost = (decimal) totalDays * cost,
+                        Status = "Pending"
+                    };
+
+                    await bookingRepository.Create (booking);
+                    return Ok ();
+                }
             }
             return BadRequest ();
         }
